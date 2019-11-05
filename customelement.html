@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="lit-html.js"></script>
+    <script>
+        const msg = {   // 리터럴 객체
+            ko: {
+                hello: "안녕하세요",
+                bye: "잘가",
+            },
+            "ko-kr": {
+                hello: "안녕하세요",
+                bye: "잘가",
+            },
+            en: {
+                hello: "hello",
+                bye: "bye bye",
+            }
+        };
+
+        const i18n = {
+            get language() {
+                return this._lang;
+            },
+
+            set language(lang) { // 버튼 클릭하면 셋 함수로 이동 (ko, en)        onclick="i18n.language = 'ko'
+                if (!this._msg) { // _msg에 저장된 값이 없으면  (처음 실행되면 값이 없으니 무조건 객체 생성??)
+                    this._msg = {}; //객체 생성
+                }
+
+                if (!this._msg[lang]) { // 생성된 객체에 값이 없으면 
+                    // TODO: fetch로 변경 필요
+                    this._msg[lang] = msg[lang];    // msg 해당 인덱스 값 저장   this._msg[ko]  = msg[ko],  this._msg[en]  = msg[en]
+                }
+
+                this._lang = lang;  // 인자로 넘어온 값 this._lang에 저장 (ko, en)  즉 인덱스 역할
+
+                for (let element of document.querySelectorAll("p-wc")) {
+                    let text = element.getAttribute("text");  // 속성 텍스트   text에는 hello by값 들어감
+
+                    if (text)
+                        element.setAttribute("text", text);   // 이벤트 일으켜서  attributeChangedCallback함수 실행시키기 위해
+                }
+            },
+
+            get message() {
+                return this._msg[this._lang];   //해당 값 반환
+            }
+        }
+
+        i18n.language = (navigator.language || navigator.userLanguage).toLowerCase();
+
+        customElements.define('p-wc',  // 새로운 커스텀 엘리먼트 등록(엘리먼트 이름,
+            class extends HTMLElement {    // 기능 명시 클래스    
+
+                static get observedAttributes() { //감시자
+                    return ['text'];  // <p-wc text="hello"></p-wc> 일 경우 hello 반환?
+                    // 배열의 허용 목록에 추가된 모든 속성에 대해 attributeChangedCallback() 호출
+                }
+
+                constructor() { // 생성자
+                    super();
+                    this.shadowDOM = this.attachShadow({ 'mode': 'open' }); // 커스텀 요소에 shadow root 연결
+                    console.log('constructed!');    // 생성자 로그
+                }
+
+                connectedCallback() { // 커스텀 엘리먼트가 처음으로 다큐먼트의 DOM 에 연결되었을 때 호출
+                    console.log('connected!');
+                }
+
+                disconnectedCallback() { // 커스텀 엘리먼트가 다큐먼트의 DOM 으로부터 연결 해제되었을 때 호출
+                    console.log('disconnected!');
+                }
+                // 커스텀 엘리먼트의 어트리뷰트가 추가, 제거 또는 변경되었을  때 호출
+                attributeChangedCallback(name, old_value, new_value) {
+                    switch (name) {
+                        case 'text':
+                            this.text = i18n.message[new_value];
+                            //this.shadowDOM.querySelector("p").innerText = this.text;
+                            render(this.template(), this.shadowDOM);
+                            break;
+                    }
+
+                    console.log(`Attribute: ${name} changed to ${this.text}`);
+                }
+
+                adoptedCallback() { // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
+                    console.log('adopted!');
+                }
+
+                template() {
+                    return html`
+                    <style>
+                        :host {
+                            display: block;
+                            text-align: center;
+                            color: red;
+                        }
+
+                        .test {
+                             display: flex;
+                        } 
+                    </style>
+
+                    <p>${this.text}</p>
+                    `;
+                }
+            });
+    </script>
+</head>
+
+<body>
+    <button onclick="i18n.language = 'ko'">ko</button>
+    <button onclick="i18n.language = 'en'">en</button>
+    <p-wc text="hello"></p-wc>
+    <p-wc text="bye"></p-wc>
+</body>
+
+</html>
