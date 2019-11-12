@@ -1,38 +1,37 @@
-customElements.define('login-token',
-class extends HTMLElement {
+customElements.define(
+  "login-token",
+  class extends HTMLElement {
+    static get observedAttributes() {}
 
-  static get observedAttributes() { //감시자
-    // return ['text'];
-  }
+    constructor() {
+      super();
 
-  constructor() { // 생성자
-    super();
+      this.shadowDOM = this.attachShadow({
+        mode: "open"
+      });
+      render(this.template(), this.shadowDOM);
+      console.log("token-constructed!");
+    }
 
-    this.shadowDOM = this.attachShadow({
-      'mode': 'open'
-    });
-    render(this.template(), this.shadowDOM);
-    console.log('token-constructed!');
-  }
+    connectedCallback() {
+      console.log("token-connected!");
+    }
 
-  connectedCallback() {
-    console.log('token-connected!');
-  }
+    disconnectedCallback() {
+      console.log("disconnected!");
+    }
 
-  disconnectedCallback() {
-    console.log('disconnected!');
-  }
+    attributeChangedCallback(name, old_value, new_value) {
+      console.log(`Attribute: ${name} changed to ${this.text}`);
+    }
 
-  attributeChangedCallback(name, old_value, new_value) {
-    console.log(`Attribute: ${name} changed to ${this.text}`);
-  }
+    adoptedCallback() {
+      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
+      console.log("adopted!");
+    }
 
-  adoptedCallback() { // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
-    console.log('adopted!');
-  }
-
-  template() {
-    return html `
+    template() {
+      return html`
     <style>
     :host {
       margin: 0;
@@ -57,7 +56,7 @@ class extends HTMLElement {
       height: 50px;
     }
 
-    .token-login-text-box>p {
+    .token-login-text-box>p-wc {
       margin: 0;
       font-weight: bold;
       font-size: 2em;
@@ -85,7 +84,7 @@ class extends HTMLElement {
       margin-right: 2%;
     }
 
-    .token-label-text>p {
+    .token-label-text>p-wc {
       width:100%;
       margin: 0;
       font-weight: bold;
@@ -106,7 +105,7 @@ class extends HTMLElement {
       font-size: 1em;
       color: gray;
     }
-/*     ////////////////////////////////////////////////////////////////////////////////////*/
+
     .token-remember-id-box {
       width: 90%;
       height: 15px;
@@ -129,7 +128,7 @@ class extends HTMLElement {
       margin-left: 5px;
     }
 
-    .token-remember-text-box>p {
+    .token-remember-text-box>p-wc {
       margin: 0;
       font-size: .7em;
       line-height: 15px;
@@ -146,7 +145,7 @@ class extends HTMLElement {
       list-style: none;
     }
 
-    .token-join-id-password-link>p {
+    .token-join-id-password-link>p-wc {
       display: inline-block;
       margin: 0;
       padding: 0;
@@ -178,7 +177,7 @@ class extends HTMLElement {
       background: gray;
     }
 
-    .token-login-button>p {
+    .token-login-button>p-wc {
       margin: 0px;
       font-weight: bold;
       font-size: 20px;
@@ -187,7 +186,7 @@ class extends HTMLElement {
       text-align: center;
     }
 
-    @media (max-width: 991px) { /* 태블릿 디바이스 (가로 해상도가 992px 보다 작은 화면에 적용) */
+    @media (max-width: 991px) { 
       .token-container {
         padding: 15px;
       }
@@ -200,7 +199,7 @@ class extends HTMLElement {
         height: 45px;
       }
 
-      .token-login-text-box>p {
+      .token-login-text-box>p-wc {
         font-size: 1.6em;
         line-height: 45px;
       }
@@ -228,7 +227,7 @@ class extends HTMLElement {
       }
     }
 
-    @media (max-width: 767px) { /* 가로모드 모바일 디바이스 (가로 해상도가 768px 보다 작은 화면에 적용) */
+    @media (max-width: 767px) { 
       .token-container {
         padding: 10px;
       }
@@ -241,7 +240,7 @@ class extends HTMLElement {
         height: 40px;
       }
 
-      .token-login-text-box>p {
+      .token-login-text-box>p-wc {
         font-size: 1.4em;
         line-height: 40px;
       }
@@ -269,7 +268,7 @@ class extends HTMLElement {
       }
     }
 
-    @media (max-width: 575px) { /* 세로모드 모바일 디바이스 (가로 해상도가 576px 보다 작은 화면에 적용) */
+    @media (max-width: 575px) { 
       .token-label-text>p {
         font-size: .8em;
       }
@@ -282,10 +281,10 @@ class extends HTMLElement {
 
     <div class="token-container">
       <div class="token-Information-box">
-        <div class="token-login-text-box"> <p>토큰 로그인</p> </div>
+        <div class="token-login-text-box"> <p-wc text="tokenLogin"></p-wc> </div>
         <div class="token-Information-list">
           <form>
-            <label class="token-label-text" for="ID"> <p>토큰 아이디 :</p> </label>
+            <label class="token-label-text" for="ID"> <p-wc text="token"></p-wc> </label>
             <input type="email" id="ID" class="input-box" autocomplete autofocus
             placeholder="example@example.com" required>
           </form>
@@ -295,22 +294,23 @@ class extends HTMLElement {
       <div class="token-remember-id-box">
         <form>
           <input type="checkbox" id="remember" name="check" class="token-checkbox" value="check">
-          <label class="token-remember-text-box" for="remember"> <p>토큰 아이디 기억하기</p> </label>
+          <label class="token-remember-text-box" for="remember"> <p-wc text="tokenRemember"></p-wc> </label>
         </form>
       </div>
 
       <div class="token-join-id-password-find">
-        <a href="https://www.naver.com/" class="token-join-id-password-link" target="_blank"> <p class="token-find">토큰 생성</p> </a>
-        <a href="https://www.naver.com/" class="token-join-id-password-link" target="_blank"> <p class="token-join">회원가입</p> </a>
+        <a href="https://www.naver.com/" class="token-join-id-password-link" target="_blank"> <p-wc class="token-find" text="tokenCreate"></p-wc> </a>
+        <a href="https://www.naver.com/" class="token-join-id-password-link" target="_blank"> <p-wc class="token-join" text="join"></p-wc> </a>
       </div>
 
       <div class="token-login-button-box">
-        <button class="token-login-button"><P>LOGIN</P></button>
+        <button class="token-login-button"><p-wc text="login"></p-wc></button>
       </div>
     </div>
     </style>
 
 
     `;
+    }
   }
-});
+);

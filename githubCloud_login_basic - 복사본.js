@@ -1,7 +1,10 @@
 customElements.define(
   "login-basic",
   class extends HTMLElement {
-    static get observedAttributes() {}
+    static get observedAttributes() {
+      //감시자
+      // return ['text'];
+    }
 
     constructor() {
       // 생성자
@@ -69,6 +72,13 @@ customElements.define(
             width: 100%;
             height: 100px;
             margin: 0;
+          }
+
+          .basic-Information-list > form {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            box-sizing: border-box;
           }
 
           .basic-label-text {
@@ -181,6 +191,7 @@ customElements.define(
           }
 
           @media (max-width: 991px) {
+            /* 태블릿 디바이스 (가로 해상도가 992px 보다 작은 화면에 적용) */
             .basic-container {
               padding: 15px;
             }
@@ -227,6 +238,7 @@ customElements.define(
           }
 
           @media (max-width: 767px) {
+            /* 가로모드 모바일 디바이스 (가로 해상도가 768px 보다 작은 화면에 적용) */
             .basic-container {
               padding: 10px;
             }
@@ -273,6 +285,7 @@ customElements.define(
           }
 
           @media (max-width: 575px) {
+            /* 세로모드 모바일 디바이스 (가로 해상도가 576px 보다 작은 화면에 적용) */
             .basic-label-text > p-wc {
               font-size: 0.8em;
             }
@@ -284,42 +297,55 @@ customElements.define(
         </style>
 
         <div class="basic-container">
-        <form>
           <div class="basic-Information-box">
             <div class="basic-login-text-box">
               <p-wc text="basicLogin"></p-wc>
             </div>
-            
             <div class="basic-Information-list">
-              <label class="basic-label-text" for="ID">
+              <form>
+                <label class="basic-label-text" for="ID">
                   <p-wc text="basicId"></p-wc>
                 </label>
-                <input type="email" id="ID" class="input-box"
+                <input
+                  type="email"
+                  id="ID"
+                  class="input-box"
                   autocomplete
                   autofocus
                   placeholder="example@example.com"
                   required
                 />
-            
+              </form>
+
+              <form>
                 <label class="basic-label-text" for="PASSWORD">
                   <p-wc text="basicPassword"></p-wc>
                 </label>
-                <input type="password" id="PASSWORD" class="input-box"
+                <input
+                  type="password"
+                  id="PASSWORD"
+                  class="input-box"
                   placeholder="********"
                   autocomplete="off"
                   required
                 />
+              </form>
             </div>
           </div>
 
           <div class="basic-remember-id-box">
             <form>
-              <input type="checkbox" id="remember" name="check" class="basic-checkbox"
+              <input
+                type="checkbox"
+                id="remember"
+                name="check"
+                class="basic-checkbox"
                 value="check"
               />
               <label class="basic-remember-text-box" for="remember">
                 <p-wc text="idRemember">></p-wc>
               </label>
+            </form>
           </div>
 
           <div class="basic-join-id-password-find">
@@ -344,7 +370,6 @@ customElements.define(
               <p-wc text="loginButton"></p-wc>
             </button>
           </div>
-          </form>
         </div>
       `;
     }
