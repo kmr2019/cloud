@@ -23,6 +23,7 @@ const msg = {
     tokenRemember: "토큰 기억하기",
     tokenCreate: "토큰 생성",
     tokenb: "토큰",
+    idpassJoin: ""
   },
   "ko-kr": {
     hello: "안녕하세요",
@@ -45,7 +46,7 @@ const msg = {
     loginButton: "로그인",
     tokenLogin: "토큰 로그인",
     token: "토큰 :",
-    tokenRemember: "토큰 기억하기",
+    tokenRemember: "자동 로그인",
     tokenCreate: "토큰 생성",
     tokenb: "토큰",
   },

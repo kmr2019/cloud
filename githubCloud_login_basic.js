@@ -47,9 +47,10 @@ customElements.define(
           }
 
           .basic-Information-box {
-            width: 90%;
-            height: 150px;
-            margin: 0 auto;
+            width: 100%;
+            height: auto;
+            padding: 15px;
+            box-sizing: border-box;
           }
 
           .basic-login-text-box {
@@ -67,85 +68,62 @@ customElements.define(
 
           .basic-Information-list {
             width: 100%;
-            height: 100px;
+            height: auto;
             margin: 0;
-          }
-
-          .basic-label-text {
-            margin: auto 0;
-            float: left;
-            width: 30%;
-            margin-right: 2%;
-          }
-
-          .basic-label-text > p-wc {
-            width: 100%;
-            margin: 0;
-            font-weight: bold;
-            font-size: 1.2em;
-            line-height: 30px;
-            color: gray;
-            text-align: right;
+            padding: 15px 0 0;
+            box-sizing: border-box;
           }
 
           .input-box {
-            margin: auto 0;
-            float: left;
-            width: 68%;
-            height: 30px;
-            padding: 0px;
-            border-style: none;
-            border-bottom: 1px solid gray;
+            margin-bottom: 10px;
+            width: 100%;
+            height: 40px;
+            padding-left: 10px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            box-sizing: border-box;
+            line-height: 40px;
             font-size: 1em;
             color: gray;
           }
 
           .basic-remember-id-box {
-            width: 90%;
-            height: 15px;
-            margin: 5px auto;
-          }
-
-          .basic-remember-id-box > form {
             display: flex;
             justify-content: flex-end;
+            width: 100%;
+            height: auto;
+            padding: 0 15px;
+            box-sizing: border-box;
           }
 
           .basic-checkbox {
             width: 15px;
             height: 15px;
-            margin: auto 0;
           }
 
           .basic-remember-text-box {
-            width: auto;
+            height: auto;
             margin-left: 5px;
           }
 
           .basic-remember-text-box > p-wc {
-            margin: 0;
+            margin: auto 0;
             font-size: 0.7em;
-            line-height: 15px;
+            line-height: 21px;
             color: gray;
           }
 
           .basic-join-id-password-find {
-            width: 90%;
-            height: 20px;
-            margin: 0 auto;
-          }
-
-          .basic-join-id-password-link {
-            list-style: none;
+            width: 100%;
+            height: auto;
+            padding: 10px 15px;
+            box-sizing: border-box;
           }
 
           .basic-join-id-password-link > p-wc {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
             font-weight: bold;
             font-size: 0.7em;
-            line-height: 20px;
+            line-height: 21px;
             color: gray;
           }
 
@@ -158,35 +136,26 @@ customElements.define(
           }
 
           .basic-login-button-box {
-            width: 90%;
+            width: 100%;
             height: auto;
-            margin: 25px auto 0;
+            padding: 15px;
+            box-sizing: border-box;
           }
 
           .basic-login-button {
             width: 100%;
             height: 40px;
-            padding: 0;
             border: 1px solid gray;
+            border-radius: 5px;
             background: gray;
-          }
-
-          .basic-login-button > p-wc {
-            margin: 0px;
             font-weight: bold;
             font-size: 20px;
-            line-height: 40px;
             color: #eaeaea;
-            text-align: center;
           }
 
           @media (max-width: 991px) {
             .basic-container {
               padding: 15px;
-            }
-
-            .basic-Information-box {
-              height: 140px;
             }
 
             .basic-login-text-box {
@@ -198,41 +167,15 @@ customElements.define(
               line-height: 45px;
             }
 
-            .basic-Information-list {
-              height: 90px;
-            }
-
-            .basic-Information-list > form {
-              height: 45px;
-            }
-
-            .basic-label-text {
-              width: 25%;
-            }
-
-            .basic-label-text > p-wc {
-              font-size: 1em;
-              line-height: 25px;
-            }
-
             .input-box {
-              width: 73%;
               height: 25px;
               font-size: 0.9em;
-            }
-
-            .basic-login-button-box {
-              margin: 20px auto 0;
             }
           }
 
           @media (max-width: 767px) {
             .basic-container {
               padding: 10px;
-            }
-
-            .basic-Information-box {
-              height: 130px;
             }
 
             .basic-login-text-box {
@@ -244,39 +187,13 @@ customElements.define(
               line-height: 40px;
             }
 
-            .basic-Information-list {
-              height: 90px;
-            }
-
-            .basic-Information-list > form {
-              height: 45px;
-            }
-
-            .basic-label-text {
-              width: 20%;
-            }
-
-            .basic-label-text > p-wc {
-              font-size: 0.9em;
-              line-height: 23px;
-            }
-
             .input-box {
-              width: 78%;
               height: 23px;
               font-size: 0.8em;
-            }
-
-            .basic-login-button-box {
-              margin: 15px auto 0;
             }
           }
 
           @media (max-width: 575px) {
-            .basic-label-text > p-wc {
-              font-size: 0.8em;
-            }
-
             .input-box {
               font-size: 0.7em;
             }
@@ -284,66 +201,68 @@ customElements.define(
         </style>
 
         <div class="basic-container">
-        <form>
-          <div class="basic-Information-box">
-            <div class="basic-login-text-box">
-              <p-wc text="basicLogin"></p-wc>
-            </div>
-            
-            <div class="basic-Information-list">
-              <label class="basic-label-text" for="ID">
-                  <p-wc text="basicId"></p-wc>
-                </label>
-                <input type="email" id="ID" class="input-box"
+          <form>
+            <div class="basic-Information-box">
+              <div class="basic-login-text-box">
+                <p-wc text="basicLogin"></p-wc>
+              </div>
+
+              <div class="basic-Information-list">
+                <input
+                  type="email"
+                  id="ID"
+                  class="input-box"
                   autocomplete
                   autofocus
-                  placeholder="example@example.com"
+                  placeholder="user id"
                   required
                 />
-            
-                <label class="basic-label-text" for="PASSWORD">
-                  <p-wc text="basicPassword"></p-wc>
-                </label>
-                <input type="password" id="PASSWORD" class="input-box"
-                  placeholder="********"
+
+                <input
+                  type="password"
+                  id="PASSWORD"
+                  class="input-box"
+                  placeholder="password"
                   autocomplete="off"
                   required
                 />
+              </div>
             </div>
-          </div>
 
-          <div class="basic-remember-id-box">
-            <form>
-              <input type="checkbox" id="remember" name="check" class="basic-checkbox"
+            <div class="basic-remember-id-box">
+              <input
+                type="checkbox"
+                id="remember"
+                name="check"
+                class="basic-checkbox"
                 value="check"
               />
               <label class="basic-remember-text-box" for="remember">
                 <p-wc text="idRemember">></p-wc>
               </label>
-          </div>
+            </div>
 
-          <div class="basic-join-id-password-find">
-            <a
-              href="https://www.naver.com/"
-              class="basic-join-id-password-link"
-              target="_blank"
-            >
-              <p-wc class="basic-find" text="idpassJoin"></p-wc>
-            </a>
-            <a
-              href="https://www.naver.com/"
-              class="basic-join-id-password-link"
-              target="_blank"
-            >
-              <p-wc class="basic-join" text="join"></p-wc>
-            </a>
-          </div>
+            <div class="basic-join-id-password-find">
+              <a
+                href="https://www.naver.com/"
+                class="basic-join-id-password-link"
+                target="_blank"
+              >
+                <p-wc class="basic-find" text="idFind"></p-wc>
+              </a>
 
-          <div class="basic-login-button-box">
-            <button class="basic-login-button">
-              <p-wc text="loginButton"></p-wc>
-            </button>
-          </div>
+              <a
+                href="https://www.naver.com/"
+                class="basic-join-id-password-link"
+                target="_blank"
+              >
+                <p-wc class="basic-join" text="join"></p-wc>
+              </a>
+            </div>
+
+            <div class="basic-login-button-box">
+              <input type="submit" class="basic-login-button" value="LOGIN" />
+            </div>
           </form>
         </div>
       `;
