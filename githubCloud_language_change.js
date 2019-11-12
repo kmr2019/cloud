@@ -48,7 +48,7 @@ const msg = {
     token: "토큰 :",
     tokenRemember: "자동 로그인",
     tokenCreate: "토큰 생성",
-    tokenb: "토큰",
+    tokenb: "토큰"
   },
   en: {
     hello: "hello",
@@ -73,7 +73,7 @@ const msg = {
     token: "TOKEN :",
     tokenRemember: "TOKEN REMEMVER",
     tokenCreate: "TOKEN CREATE",
-    tokenb: "TOKEN",
+    tokenb: "TOKEN"
   }
 };
 

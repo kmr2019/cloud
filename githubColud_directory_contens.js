@@ -1,15 +1,15 @@
 const array = [
-  "wegwegwe.xls",
-  "qwq.jpg",
-  "wegegwewvvwegwe.pdf",
-  "wegvwewewegwe.css",
-  "wegwewegwe.html",
-  "wegwefqw.ppt",
-  "wwgewg.jpg",
-  "wewgege.html",
-  "qwqwww.pdf",
-  "ewgweegwe.css",
-  "ewgewwe.xls"
+  "박준렬 연애 목록.xls",
+  "최진우 사진.jpg",
+  "사업 성공.pdf",
+  "image.css",
+  "index.html",
+  "최종 ppt.ppt",
+  "박준렬 엽사.jpg",
+  "test.html",
+  "최종 논문.pdf",
+  "test.css",
+  "박준렬 명언.xls"
 ];
 
 const extension = {
@@ -52,12 +52,32 @@ customElements.define(
       console.log(`Attribute: ${name} changed to ${new_value}`);
       let navi_index = new_value;
       let update = this.shadowDOM.querySelector(".directory-wrapper");
+      
+      if (navi_index == 0) {
+        array.forEach(data => {
+          this.farthing = data.split(".");
+          this.extension = extension[this.farthing[1]];
+          update.innerHTML += `<div class='directory-grid-item'>
+                                 <img src='${this.extension}' class='directory-img'>
+                                 <p class='directory-file-route'>${this.farthing[0]}</p>
+                               </div>`;
+        });
+      } else {
+        update.innerHTML = ` `;
+      }
 
-      array.forEach(test => {
-        let farthing = test.split(".");
-        this.extension = extension[farthing[1]];
-        update.innerHTML += `<div class='directory-grid-item'><img src='${this.extension}' class='directory-img-size'></div>`;
+      let grid_box = this.shadowDOM.querySelectorAll(".directory-grid-item");
+      
+      grid_box.forEach( (list) => {
+        list.onmouseover = () => {
+          list.children[0].style.animation = "expansion 1s forwards";
+        };
+
+        list.onmouseout = () => {
+          list.children[0].style.animation = "reduction 1s forwards";
+        };
       });
+      render(this.template(), this.shadowDOM);
     }
 
     adoptedCallback() {
@@ -94,42 +114,60 @@ customElements.define(
             display: grid;
             overflow-y: scroll;
             grid-template-columns: auto auto auto auto auto;
-            grid-gap: 10px;
+            grid-gap: 5px;
             width: 100%;
             height: 460px;
             box-sizing: border-box;
           }
 
           .directory-grid-item {
-            padding: 20px;
+            padding: 30px;
             border: 1px solid #eaeaea;
-            text-align: center;
+          }
+          
+          .directory-img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
           }
 
-          .directory-img-size {
-            width: 50px;
+          @keyframes expansion {
+            from {
+              transform: scale(1);
+            }
+            to {
+              transform: scale(1.3);
+            }
+          }
+
+          @keyframes reduction {
+            from {
+              transform: scale(1.3);
+            }
+            to {
+              transform: scale(1);
+            }
+          }
+
+          .directory-file-route {
+            width: 100%;
             height: auto;
+            margin: 0;
+            padding: 10px 0 0;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-align: center;
+            color: gray;
           }
 
           @media (max-width: 991px) {
-            /* 테블릿 모바일 디바이스 */
-            .directory-container {
-              height: auto;
-            }
           }
 
           @media (max-width: 767px) {
-            /* 가로모드 모바일 디바이스 */
-            .directory-container {
-              height: 400px;
-            }
           }
 
           @media (max-width: 575px) {
-            /* 세로모드 모바일 디바이스 */
-            .directory-container {
-              height: 350px;
-            }
           }
         </style>
 

@@ -27,20 +27,19 @@ customElements.define(
       );
       let count = 1;
 
-      navi_list.forEach(
-        list =>
-          (list.onclick = () => {
-            list.classList.add("header-navi-underline");
-
-            navi_list_clone.forEach(list_clone => {
-              if (list === list_clone) {
-                //continue 대신
-              } else {
-                list_clone.classList.remove("header-navi-underline");
-              }
-            });
-          })
-      );
+      navi_list.forEach( list => {
+        list.onclick = () => {
+          list.classList.add("header-navi-underline");
+1
+          navi_list_clone.forEach(list_clone => {
+            if (list === list_clone) {
+              //continue 대신
+            } else {
+              list_clone.classList.remove("header-navi-underline");
+            }
+          });
+        };
+      });
 
       mobile_navi_button.onclick = () => {
         if (count % 2 != 0) {
