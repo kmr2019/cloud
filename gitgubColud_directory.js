@@ -49,6 +49,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             margin: 0;
             padding: 0;

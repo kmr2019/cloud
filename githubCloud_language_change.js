@@ -152,6 +152,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             padding: 0;
             margin: 0;

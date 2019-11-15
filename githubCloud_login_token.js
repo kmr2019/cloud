@@ -33,6 +33,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             margin: 0;
             padding: 0;
@@ -48,7 +51,7 @@ customElements.define(
           .token-Information-box {
             width: 100%;
             height: auto;
-            padding: 15px;
+            padding: 0 15px 15px;
             box-sizing: border-box;
           }
 
@@ -76,6 +79,7 @@ customElements.define(
           .input-box {
             width: 100%;
             height: 40px;
+            margin: 0;
             padding-left: 10px;
             border: 1px solid gray;
             border-radius: 5px;
@@ -97,10 +101,12 @@ customElements.define(
           .token-checkbox {
             width: 15px;
             height: 15px;
+            margin: auto 0;
           }
 
           .token-remember-text-box {
             height: auto;
+            margin: auto 0;
             margin-left: 5px;
           }
 
@@ -143,6 +149,7 @@ customElements.define(
           .token-login-button {
             width: 100%;
             height: 40px;
+            margin: 0;
             border: 1px solid gray;
             border-radius: 5px;
             background: gray;

@@ -58,6 +58,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             margin: 0;
             padding: 0;
@@ -88,6 +91,7 @@ customElements.define(
             width: 35px;
             height: 35px;
             margin: auto 0 auto 20px;
+            padding: 0;
             border: 1px solid #eaeaea;
             background: white;
             box-shadow: 3px 3px #eaeaea;

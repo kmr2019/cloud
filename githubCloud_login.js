@@ -56,6 +56,8 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+        
           :host {
             --background: white;
             --box-background: white;

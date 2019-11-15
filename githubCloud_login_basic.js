@@ -1,10 +1,15 @@
+window.alert = txt => {
+  let dv= document.createElement("div");
+  dv.innerHTML+=`<alert-custom data="${txt}"></alert-custom>`;
+  document.body.appendChild(dv.firstChild);
+};
+
 customElements.define(
   "login-basic",
   class extends HTMLElement {
     static get observedAttributes() {}
 
     constructor() {
-      // 생성자
       super();
 
       this.shadowDOM = this.attachShadow({
@@ -15,6 +20,11 @@ customElements.define(
     }
 
     connectedCallback() {
+      let login_button = this.shadowDOM.querySelector(".basic-login-button");
+      login_button.onclick = () => {
+        window.alert("hello");
+      };
+
       console.log("basic-connected!");
     }
 
@@ -34,6 +44,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             margin: 0;
             padding: 0;
@@ -49,7 +62,7 @@ customElements.define(
           .basic-Information-box {
             width: 100%;
             height: auto;
-            padding: 15px;
+            padding: 0 15px;
             box-sizing: border-box;
           }
 
@@ -99,11 +112,13 @@ customElements.define(
           .basic-checkbox {
             width: 15px;
             height: 15px;
+            margin: auto 0;
           }
 
           .basic-remember-text-box {
             height: auto;
-            margin-left: 5px;
+            margin: auto 0;
+            padding-left: 5px;
           }
 
           .basic-remember-text-box > p-wc {
@@ -145,6 +160,7 @@ customElements.define(
           .basic-login-button {
             width: 100%;
             height: 40px;
+            margin: 0;
             border: 1px solid gray;
             border-radius: 5px;
             background: gray;

@@ -30,7 +30,7 @@ customElements.define(
       navi_list.forEach( list => {
         list.onclick = () => {
           list.classList.add("header-navi-underline");
-1
+
           navi_list_clone.forEach(list_clone => {
             if (list === list_clone) {
               //continue 대신
@@ -76,6 +76,9 @@ customElements.define(
     template() {
       return html`
         <style>
+          @import "normalize.css";
+          @import "skeleton.css";
+
           :host {
             --background: pink;
             --text-color: white;
@@ -264,6 +267,7 @@ customElements.define(
               width: 70%;
               height: 70%;
               margin: auto;
+              padding: 0;
               border-radius: 20%;
               background: #eaeaea;
               border: 1px solid #eaeaea;
