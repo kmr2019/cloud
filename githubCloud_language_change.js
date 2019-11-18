@@ -20,7 +20,7 @@ const msg = {
     loginButton: "로그인",
     tokenLogin: "토큰 로그인",
     token: "토큰 :",
-    tokenRemember: "토큰 기억하기",
+    tokenRemember: "토큰 유지",
     tokenCreate: "토큰 생성",
     tokenb: "토큰",
     idpassJoin: ""
@@ -46,7 +46,7 @@ const msg = {
     loginButton: "로그인",
     tokenLogin: "토큰 로그인",
     token: "토큰 :",
-    tokenRemember: "자동 로그인",
+    tokenRemember: "토큰 유지",
     tokenCreate: "토큰 생성",
     tokenb: "토큰"
   },
@@ -151,10 +151,10 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
             padding: 0;
             margin: 0;

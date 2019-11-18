@@ -17,8 +17,8 @@ customElements.define(
       let login_button = this.shadowDOM.querySelectorAll(".login-button");
       let basic = this.shadowDOM.querySelector("login-basic");
       let token = this.shadowDOM.querySelector("login-token");
-      let basic_button = this.shadowDOM.querySelector(".basic-login-box");
-      let token_button = this.shadowDOM.querySelector(".token-login-box");
+      let basic_text = this.shadowDOM.querySelector(".basic-login-text-box>p-wc");
+      let token_text = this.shadowDOM.querySelector(".token-login-text-box>p-wc");
       token.style.display = "none";
 
       login_button.forEach(list => {
@@ -26,13 +26,13 @@ customElements.define(
           if (list.getAttribute("data-value") == "basic") {
             basic.style.display = "block";
             token.style.display = "none";
-            basic_button.style.background = "#EAEAEA";
-            token_button.style.background = "white";
+            basic_text.style.color = "#FF5A5A";
+            token_text.style.color = "gray";
           } else {
             basic.style.display = "none";
             token.style.display = "block";
-            basic_button.style.background = "white";
-            token_button.style.background = "#EAEAEA";
+            basic_text.style.color = "gray";
+            token_text.style.color = "#FF5A5A";
           }
         };
       });
@@ -55,9 +55,10 @@ customElements.define(
 
     template() {
       return html`
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
+
         <style>
-          @import "normalize.css";
-        
           :host {
             --background: white;
             --box-background: white;
@@ -75,7 +76,6 @@ customElements.define(
             width: 100%;
             height: 800px;
             margin: 0 auto;
-            background-color: var(--background);
             box-sizing: border-box;
           }
 
@@ -83,33 +83,35 @@ customElements.define(
             width: 500px;
             height: auto;
             margin: auto;
-            border: 1px solid #eaeaea;
-            background-color: var(--box-background);
-            box-shadow: 5px 5px 5px #eaeaea;
-          }
-
-          .basic-login-box,
-          .token-login-box {
-            display: inline-block;
-            width: 50%;
-            height: 70px;
-            border: 1px solid #eaeaea;
-            background: #eaeaea;
             box-sizing: border-box;
-            box-shadow: 3px 3px #eaeaea;
           }
 
-          .token-login-box {
-            background: white;
+          .login-text-box {
+            width: 100%;
+            height: auto;
+            padding: 0 35px;
+            box-sizing: border-box;
           }
 
-          .basic-login-box > p-wc,
-          .token-login-box > p-wc {
+          .basic-login-text-box,
+          .token-login-text-box {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            padding: 0 10px;
+            box-sizing: border-box; 
+          }
+
+          .basic-login-text-box > p-wc,
+          .token-login-text-box > p-wc {
             margin: 0;
             font-weight: bold;
-            font-size: 1.5em;
-            line-height: 70px;
+            font-size: 1em;
             text-align: center;
+            color: #FF5A5A;
+          }
+
+          .token-login-text-box > p-wc {
             color: gray;
           }
 
@@ -179,15 +181,21 @@ customElements.define(
 
         <div class="login-container">
           <div class="login-box">
-            <div class="basic-login-box">
-              <p-wc class="login-button" data-value="basic" text="basic"></p-wc>
-            </div>
-            <div class="token-login-box">
-              <p-wc
-                class="login-button"
-                data-value="token"
-                text="tokenb"
-              ></p-wc>
+            <div class="login-text-box">
+              <div class="basic-login-text-box">
+                <p-wc
+                  class="login-button"
+                  data-value="basic"
+                  text="basic"
+                ></p-wc>
+              </div>
+              <div class="token-login-text-box">
+                <p-wc
+                  class="login-button"
+                  data-value="token"
+                  text="tokenb"
+                ></p-wc>
+              </div>
             </div>
             <login-basic></login-basic>
             <login-token></login-token>

@@ -16,6 +16,13 @@ customElements.define(
     }
 
     connectedCallback() {
+      let button_index = this.shadowDOM.querySelectorAll(".confirm-button");
+
+      button_index.forEach(list => {
+        list.onclick = () => {
+          document.body.removeChild(this);
+        };
+      });
       console.log("testtesttest!");
     }
 
@@ -24,6 +31,12 @@ customElements.define(
     }
 
     attributeChangedCallback(name, old_value, new_value) {
+      switch (name) {
+        case "data":
+          this.data = new_value;
+          render(this.template(), this.shadowDOM);
+          break;
+      }
       console.log(name, old_value, new_value);
       console.log(`Attribute: ${name} changed to ${new_value}`);
       //여기서 값 읽혀
@@ -36,10 +49,10 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
             margin: 0;
             padding: 0;
@@ -121,7 +134,7 @@ customElements.define(
 
             <div class="confirm-contents-box">
               <div class="confirm-text-box">
-                <p-wc class="confirm-text" text=""></p-wc>
+                <p-wc class="confirm-text" text="${this.data}"></p-wc>
               </div>
 
               <div class="confirm-button-box">

@@ -14,6 +14,30 @@ customElements.define(
     }
 
     connectedCallback() {
+      let count = 0;
+      let remember_button = this.shadowDOM.querySelector(
+        ".token-remember-id-button"
+      );
+      let remember_button_move = this.shadowDOM.querySelector(
+        ".token-remember-id-button-move"
+      );
+      let remember_text = this.shadowDOM.querySelector(
+        ".token-remember-id-text"
+      );
+
+      remember_button.onclick = () => {
+        if (count == 0) {
+          count++;
+          remember_button_move.style.animation =
+            "remember-button-ani-right .5s forwards";
+          remember_text.style.color = "white";
+        } else {
+          count--;
+          remember_button_move.style.animation =
+            "remember-button-ani-left .5s forwards";
+          remember_text.style.color = "gray";
+        }
+      };
       console.log("token-connected!");
     }
 
@@ -32,10 +56,10 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
             margin: 0;
             padding: 0;
@@ -63,9 +87,10 @@ customElements.define(
           .token-login-text-box > p-wc {
             margin: 0;
             font-weight: bold;
-            font-size: 2em;
+            font-size: 1em;
             line-height: 50px;
             text-align: center;
+            color: white;
           }
 
           .token-Information-list {
@@ -78,15 +103,24 @@ customElements.define(
 
           .input-box {
             width: 100%;
-            height: 40px;
+            height: 50px;
             margin: 0;
-            padding-left: 10px;
+            padding-left: 20px;
             border: 1px solid gray;
-            border-radius: 5px;
+            border-radius: 20px;
             box-sizing: border-box;
-            line-height: 40px;
+            background: gray;
+            opacity: 0.4;
             font-size: 1em;
-            color: gray;
+            color: white;
+          }
+
+          .input-box:focus {
+            outline: none;
+          }
+
+          .input-box::placeholder {
+            color: white;
           }
 
           .token-remember-id-box {
@@ -98,30 +132,61 @@ customElements.define(
             box-sizing: border-box;
           }
 
-          .token-checkbox {
-            width: 15px;
-            height: 15px;
-            margin: auto 0;
-          }
-
-          .token-remember-text-box {
+          .token-remember-id-button {
+            position: relative;
+            width: 40px;
             height: auto;
-            margin: auto 0;
-            margin-left: 5px;
+            border-radius: 20px;
+            background: gray;
           }
 
-          .token-remember-text-box > p-wc {
+          .token-remember-id-button-move {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            background: white;
+          }
+
+          @keyframes remember-button-ani-right {
+            0% {
+              left: 0px;
+            }
+            100% {
+              left: 20px;
+            }
+          }
+
+          @keyframes remember-button-ani-left {
+            0% {
+              left: 20px;
+            }
+            100% {
+              left: 0px;
+            }
+          }
+
+          .token-remember-id-text {
             margin: auto 0;
+            padding-right: 10px;
+            font-weight: bold;
             font-size: 0.7em;
-            line-height: 21px;
+            line-height: 20px;
             color: gray;
           }
 
+
           .token-join-id-password-find {
+            display: flex;
+            justify-content: space-between;
             width: 100%;
             height: auto;
-            padding: 10px 15px;
+            padding: 10px 15px 0;
             box-sizing: border-box;
+          }
+
+          .token-join-id-password-find > a {
+            text-decoration: none;
           }
 
           .token-join-id-password-link > p-wc {
@@ -129,14 +194,6 @@ customElements.define(
             font-size: 0.7em;
             line-height: 21px;
             color: gray;
-          }
-
-          .token-find {
-            float: left;
-          }
-
-          .token-join {
-            float: right;
           }
 
           .token-login-button-box {
@@ -148,14 +205,14 @@ customElements.define(
 
           .token-login-button {
             width: 100%;
-            height: 40px;
+            height: 50px;
             margin: 0;
-            border: 1px solid gray;
-            border-radius: 5px;
-            background: gray;
+            border: 1px solid #FF5A5A;
+            border-radius: 20px;
+            background: #FF5A5A;
             font-weight: bold;
             font-size: 20px;
-            color: #eaeaea;
+            color: white;
           }
 
           @media (max-width: 991px) {
@@ -226,16 +283,11 @@ customElements.define(
             </div>
 
             <div class="token-remember-id-box">
-              <input
-                type="checkbox"
-                id="remember"
-                name="check"
-                class="token-checkbox"
-                value="check"
-              />
-              <label class="token-remember-text-box" for="remember">
-                <p-wc text="tokenRemember">></p-wc>
-              </label>
+              <p-wc class="token-remember-id-text" text="tokenRemember">></p-wc>
+
+              <div class="token-remember-id-button">
+                <div class="token-remember-id-button-move"></div>
+              </div>
             </div>
 
             <div class="token-join-id-password-find">

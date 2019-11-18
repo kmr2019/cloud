@@ -27,7 +27,7 @@ customElements.define(
       );
       let count = 1;
 
-      navi_list.forEach( list => {
+      navi_list.forEach(list => {
         list.onclick = () => {
           list.classList.add("header-navi-underline");
 
@@ -75,12 +75,12 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
-            --background: pink;
+            --background: #4C4C4C;
             --text-color: white;
           }
 
@@ -91,9 +91,9 @@ customElements.define(
           }
 
           .header-container {
+            margin-top: 20px;
             width: 100%;
             height: 70px;
-            background-color: var(--background);
           }
 
           .header-contents {

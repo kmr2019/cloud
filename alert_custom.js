@@ -16,6 +16,11 @@ customElements.define(
     }
 
     connectedCallback() {
+      let button_close = this.shadowDOM.querySelector(".alert-button");
+
+      button_close.onclick = () => {
+        document.body.removeChild(this);
+      };
       console.log("connectedCallback!");
     }
 
@@ -24,6 +29,12 @@ customElements.define(
     }
 
     attributeChangedCallback(name, old_value, new_value) {
+      switch (name) {
+        case "data":
+          this.data = new_value;
+          render(this.template(), this.shadowDOM);
+          break;
+      }
       console.log(name, old_value, new_value);
       console.log(`Attribute: ${name} changed to ${new_value}`);
     }
@@ -34,10 +45,10 @@ customElements.define(
 
     template() {
       return html`
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
+        
         <style>
-          @import "normalize.css";
-          @import "skeleton.css";
-
           :host {
             margin: 0;
             padding: 0;
@@ -119,7 +130,7 @@ customElements.define(
 
             <div class="alert-contents-box">
               <div class="alert-text-box">
-                <p-wc class="alert-text" text= ""></p-wc>
+                <p-wc class="alert-text" text="${this.data}"></p-wc>
               </div>
 
               <div class="alert-button-box">

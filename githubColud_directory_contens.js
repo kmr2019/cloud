@@ -52,7 +52,7 @@ customElements.define(
       console.log(`Attribute: ${name} changed to ${new_value}`);
       let navi_index = new_value;
       let update = this.shadowDOM.querySelector(".directory-wrapper");
-      
+
       if (navi_index == 0) {
         array.forEach(data => {
           this.farthing = data.split(".");
@@ -67,8 +67,8 @@ customElements.define(
       }
 
       let grid_box = this.shadowDOM.querySelectorAll(".directory-grid-item");
-      
-      grid_box.forEach( (list) => {
+
+      grid_box.forEach(list => {
         list.onmouseover = () => {
           list.children[0].style.animation = "expansion 1s forwards";
         };
@@ -87,10 +87,10 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
             margin: 0;
             padding: 0;
@@ -127,7 +127,7 @@ customElements.define(
             padding: 30px;
             border: 1px solid #eaeaea;
           }
-          
+
           .directory-img {
             display: block;
             width: 50px;

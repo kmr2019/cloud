@@ -1,9 +1,3 @@
-window.alert = txt => {
-  let dv= document.createElement("div");
-  dv.innerHTML+=`<alert-custom data="${txt}"></alert-custom>`;
-  document.body.appendChild(dv.firstChild);
-};
-
 customElements.define(
   "login-basic",
   class extends HTMLElement {
@@ -20,9 +14,38 @@ customElements.define(
     }
 
     connectedCallback() {
+      let count = 0;
+      let remember_button = this.shadowDOM.querySelector(
+        ".basic-remember-id-button"
+      );
+      let remember_button_move = this.shadowDOM.querySelector(
+        ".basic-remember-id-button-move"
+      );
+      let remember_text = this.shadowDOM.querySelector(
+        ".basic-remember-id-text"
+      );
+
+      remember_button.onclick = () => {
+        if (count == 0) {
+          count++;
+          remember_button_move.style.animation =
+            "remember-button-ani-right .5s forwards";
+          remember_text.style.color = "white";
+        } else {
+          count--;
+          remember_button_move.style.animation =
+            "remember-button-ani-left .5s forwards";
+          remember_text.style.color = "gray";
+        }
+      };
+
       let login_button = this.shadowDOM.querySelector(".basic-login-button");
       login_button.onclick = () => {
-        window.alert("hello");
+        if (confirm("hello")) {
+          console.log("true");
+        } else {
+          console.log("false");
+        }
       };
 
       console.log("basic-connected!");
@@ -43,10 +66,10 @@ customElements.define(
 
     template() {
       return html`
-        <style>
-          @import "normalize.css";
-          @import "skeleton.css";
+        <link href="normalize.css" />
+        <link href="skeleton.css" />
 
+        <style>
           :host {
             margin: 0;
             padding: 0;
@@ -74,9 +97,10 @@ customElements.define(
           .basic-login-text-box > p-wc {
             margin: 0;
             font-weight: bold;
-            font-size: 2em;
+            font-size: 1em;
             line-height: 50px;
             text-align: center;
+            color: white;
           }
 
           .basic-Information-list {
@@ -88,16 +112,25 @@ customElements.define(
           }
 
           .input-box {
-            margin-bottom: 10px;
             width: 100%;
-            height: 40px;
-            padding-left: 10px;
+            height: 50px;
+            margin-bottom: 10px;
+            padding-left: 20px;
             border: 1px solid gray;
-            border-radius: 5px;
+            border-radius: 20px;
             box-sizing: border-box;
-            line-height: 40px;
+            background: gray;
+            opacity: 0.4;
             font-size: 1em;
-            color: gray;
+            color: white;
+          }
+
+          .input-box:focus {
+            outline: none;
+          }
+
+          .input-box::placeholder {
+            color: white;
           }
 
           .basic-remember-id-box {
@@ -109,30 +142,59 @@ customElements.define(
             box-sizing: border-box;
           }
 
-          .basic-checkbox {
-            width: 15px;
-            height: 15px;
-            margin: auto 0;
-          }
-
-          .basic-remember-text-box {
+          .basic-remember-id-button {
+            position: relative;
+            width: 40px;
             height: auto;
-            margin: auto 0;
-            padding-left: 5px;
+            border-radius: 20px;
+            background: gray;
           }
 
-          .basic-remember-text-box > p-wc {
+          .basic-remember-id-button-move {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            background: white;
+          }
+
+          @keyframes remember-button-ani-right {
+            0% {
+              left: 0px;
+            }
+            100% {
+              left: 20px;
+            }
+          }
+
+          @keyframes remember-button-ani-left {
+            0% {
+              left: 20px;
+            }
+            100% {
+              left: 0px;
+            }
+          }
+
+          .basic-remember-id-text {
             margin: auto 0;
+            padding-right: 10px;
+            font-weight: bold;
             font-size: 0.7em;
-            line-height: 21px;
+            line-height: 20px;
             color: gray;
           }
 
           .basic-join-id-password-find {
+            display: flex;
+            justify-content: space-between;
             width: 100%;
             height: auto;
-            padding: 10px 15px;
+            padding: 10px 15px 0;
             box-sizing: border-box;
+          }
+          .basic-join-id-password-find > a {
+            text-decoration: none;
           }
 
           .basic-join-id-password-link > p-wc {
@@ -140,14 +202,6 @@ customElements.define(
             font-size: 0.7em;
             line-height: 21px;
             color: gray;
-          }
-
-          .basic-find {
-            float: left;
-          }
-
-          .basic-join {
-            float: right;
           }
 
           .basic-login-button-box {
@@ -159,14 +213,14 @@ customElements.define(
 
           .basic-login-button {
             width: 100%;
-            height: 40px;
+            height: 50px;
             margin: 0;
-            border: 1px solid gray;
-            border-radius: 5px;
-            background: gray;
+            border: 1px solid #FF5A5A;
+            border-radius: 20px;
+            background: #FF5A5A;
             font-weight: bold;
             font-size: 20px;
-            color: #eaeaea;
+            color: white;
           }
 
           @media (max-width: 991px) {
@@ -246,16 +300,11 @@ customElements.define(
             </div>
 
             <div class="basic-remember-id-box">
-              <input
-                type="checkbox"
-                id="remember"
-                name="check"
-                class="basic-checkbox"
-                value="check"
-              />
-              <label class="basic-remember-text-box" for="remember">
-                <p-wc text="idRemember">></p-wc>
-              </label>
+              <p-wc class="basic-remember-id-text" text="idRemember">></p-wc>
+
+              <div class="basic-remember-id-button">
+                <div class="basic-remember-id-button-move"></div>
+              </div>
             </div>
 
             <div class="basic-join-id-password-find">
