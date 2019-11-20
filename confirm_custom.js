@@ -2,8 +2,8 @@ customElements.define(
   "confirm-custom",
   class extends HTMLElement {
     static get observedAttributes() {
-      return ["data"];
-    } // 이게 props 역할  값 들어오면
+      return ["data", "btn"];
+    }
 
     constructor() {
       // 생성자
@@ -20,10 +20,16 @@ customElements.define(
 
       button_index.forEach(list => {
         list.onclick = () => {
-          document.body.removeChild(this);
+          if (list.getAttribute("value") == "확인") {
+            this.setAttribute("btn", 1);
+            document.body.removeChild(this);
+          } else {
+            this.setAttribute("btn", 0);
+            document.body.removeChild(this);
+          }
+          
         };
       });
-      console.log("testtesttest!");
     }
 
     disconnectedCallback() {
@@ -36,6 +42,8 @@ customElements.define(
           this.data = new_value;
           render(this.template(), this.shadowDOM);
           break;
+
+        case "value":
       }
       console.log(name, old_value, new_value);
       console.log(`Attribute: ${name} changed to ${new_value}`);

@@ -68,7 +68,7 @@ customElements.define(
           .token-container {
             width: 100%;
             height: auto;
-            padding: 20px;
+            padding: 20px 30px;
             box-sizing: border-box;
           }
 
@@ -107,7 +107,7 @@ customElements.define(
             margin: 0;
             padding-left: 20px;
             border: 1px solid gray;
-            border-radius: 20px;
+            border-radius: 30px;
             box-sizing: border-box;
             background: gray;
             opacity: 0.4;
@@ -208,7 +208,7 @@ customElements.define(
             height: 50px;
             margin: 0;
             border: 1px solid #FF5A5A;
-            border-radius: 20px;
+            border-radius: 30px;
             background: #FF5A5A;
             font-weight: bold;
             font-size: 20px;

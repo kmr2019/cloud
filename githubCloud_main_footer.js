@@ -76,7 +76,6 @@ customElements.define(
 
           .footer-list-font {
             margin: 0;
-            font-weight: bold;
             font-size: 1em;
             color: gray;
           }

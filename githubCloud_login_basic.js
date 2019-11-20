@@ -40,14 +40,14 @@ customElements.define(
       };
 
       let login_button = this.shadowDOM.querySelector(".basic-login-button");
-      login_button.onclick = () => {
-        if (confirm("hello")) {
-          console.log("true");
+      
+      login_button.onclick = async () => {
+        if (await confirm("hello")) {
+          console.log("confirm true");
         } else {
-          console.log("false");
+          console.log("confirm false");
         }
       };
-
       console.log("basic-connected!");
     }
 
@@ -60,7 +60,6 @@ customElements.define(
     }
 
     adoptedCallback() {
-      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
       console.log("adopted!");
     }
 
@@ -78,7 +77,7 @@ customElements.define(
           .basic-container {
             width: 100%;
             height: auto;
-            padding: 20px;
+            padding: 20px 30px;
             box-sizing: border-box;
           }
 
@@ -117,7 +116,7 @@ customElements.define(
             margin-bottom: 10px;
             padding-left: 20px;
             border: 1px solid gray;
-            border-radius: 20px;
+            border-radius: 30px;
             box-sizing: border-box;
             background: gray;
             opacity: 0.4;
@@ -216,7 +215,7 @@ customElements.define(
             height: 50px;
             margin: 0;
             border: 1px solid #FF5A5A;
-            border-radius: 20px;
+            border-radius: 30px;
             background: #FF5A5A;
             font-weight: bold;
             font-size: 20px;

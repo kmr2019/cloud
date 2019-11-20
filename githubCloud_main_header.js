@@ -33,7 +33,6 @@ customElements.define(
 
           navi_list_clone.forEach(list_clone => {
             if (list === list_clone) {
-              //continue 대신
             } else {
               list_clone.classList.remove("header-navi-underline");
             }
@@ -105,18 +104,18 @@ customElements.define(
 
           .header-logo-box {
             float: left;
-            width: 70px;
+            width: 80px;
             height: 100%;
           }
 
           .header-logo-box > a {
             display: flex;
-            width: 70px;
+            width: 80px;
             height: 100%;
           }
 
           .header-logo-img {
-            width: 70%;
+            width: 100%;
             height: 70%;
             margin: auto;
           }

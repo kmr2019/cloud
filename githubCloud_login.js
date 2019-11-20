@@ -89,7 +89,7 @@ customElements.define(
           .login-text-box {
             width: 100%;
             height: auto;
-            padding: 0 35px;
+            padding: 0 45px;
             box-sizing: border-box;
           }
 

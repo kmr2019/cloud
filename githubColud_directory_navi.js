@@ -19,19 +19,19 @@ customElements.define(
 
     connectedCallback() {
       let icon = this.shadowDOM.querySelectorAll(".navi-icon");
-      icon[0].style.background = "#EAEAEA";
+      icon[0].style.background = "#FF5A5A";
       this.setAttribute("index", 0);
 
       icon.forEach(list => {
         list.onclick = () => {
           if (list.getAttribute("data-value") == "icons") {
-            icon[0].style.background = "#EAEAEA";
-            icon[1].style.background = "white";
+            icon[0].style.background = "#FF5A5A";
+            icon[1].style.background = "gray";
             this.setAttribute("index", 0);
             //this.test = 0;
           } else {
-            icon[0].style.background = "white";
-            icon[1].style.background = "#EAEAEA";
+            icon[0].style.background = "gray";
+            icon[1].style.background = "#FF5A5A";
             this.setAttribute("index", 1);
             //this.test = 1;
           }
@@ -77,8 +77,6 @@ customElements.define(
             height: 50px;
             max-width: 1080px;
             margin: 0 auto;
-            border: 1px solid #eaeaea;
-            box-shadow: 3px 3px #eaeaea;
           }
 
           .navi-list-box {
@@ -90,13 +88,13 @@ customElements.define(
           .navi-icon {
             width: 35px;
             height: 35px;
-            margin: auto 0 auto 20px;
+            margin: auto 10px auto 0;
             padding: 0;
-            border: 1px solid #eaeaea;
-            background: white;
-            box-shadow: 3px 3px #eaeaea;
+            border-style: none;
+            border-radius: 10px;
+            background: gray;
           }
-
+         
           @media (max-width: 991px) {
             /* 태블릿 디바이스 (가로 해상도가 992px 보다 작은 화면에 적용) */
             .navi-container {

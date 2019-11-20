@@ -23,7 +23,9 @@ const msg = {
     tokenRemember: "토큰 유지",
     tokenCreate: "토큰 생성",
     tokenb: "토큰",
-    idpassJoin: ""
+    icons: "모아보기",
+    fullIist: "전체목록",
+    picture:"사진",
   },
   "ko-kr": {
     hello: "안녕하세요",
@@ -48,7 +50,10 @@ const msg = {
     token: "토큰 :",
     tokenRemember: "토큰 유지",
     tokenCreate: "토큰 생성",
-    tokenb: "토큰"
+    tokenb: "토큰",
+    icons: "모아보기",
+    fullIist: "전체목록",
+    picture:"사진",
   },
   en: {
     hello: "hello",
@@ -73,7 +78,10 @@ const msg = {
     token: "TOKEN :",
     tokenRemember: "TOKEN REMEMVER",
     tokenCreate: "TOKEN CREATE",
-    tokenb: "TOKEN"
+    tokenb: "TOKEN",
+    icons: "icons",
+    fullIist: "full list",
+    picture:"picture",
   }
 };
 
