@@ -2,8 +2,8 @@ customElements.define(
   "prompt-custom",
   class extends HTMLElement {
     static get observedAttributes() {
-      return ["text"];
-    } // 이게 props 역할  값 들어오면
+      return ["txt", "input", "btn"];
+    }
 
     constructor() {
       // 생성자
@@ -16,14 +16,24 @@ customElements.define(
     }
 
     connectedCallback() {
-      let button_index = this.shadowDOM.querySelectorAll(".confirm-button");
+      let button_index = this.shadowDOM.querySelectorAll(".prompt-button");
+      let input_vaule = this.shadowDOM.querySelector(".prompt-input");
 
       button_index.forEach(list => {
         list.onclick = () => {
-          document.body.removeChild(this);
+          if (list.getAttribute("value") == "확인") {
+            this.setAttribute("btn", 1);
+            this.setAttribute("input",input_vaule.value);
+            render(this.template(), this.shadowDOM);
+            document.body.removeChild(this);
+          } else {
+            this.setAttribute("btn", 0);
+            this.setAttribute("input",input_vaule.value);
+            render(this.template(), this.shadowDOM);
+            document.body.removeChild(this); 
+          }
         };
       });
-      console.log("testtesttest!");
     }
 
     disconnectedCallback() {
@@ -32,8 +42,13 @@ customElements.define(
 
     attributeChangedCallback(name, old_value, new_value) {
       switch (name) {
-        case "data":
-          this.data = new_value;
+        case "txt":
+          this.txt = new_value;  
+          render(this.template(), this.shadowDOM);    
+          break;
+        case "input":
+          this.input = new_value;
+          render(this.template(), this.shadowDOM);
           break;
       }
       console.log(name, old_value, new_value);
@@ -42,7 +57,6 @@ customElements.define(
     }
 
     adoptedCallback() {
-      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
       console.log("adopted!");
     }
 
@@ -146,12 +160,12 @@ customElements.define(
 
             <div class="prompt-contents-box">
               <div class="prompt-text-box">
-                <p-wc class="prompt-text" text="${this.data}"></p-wc>
+                <p-wc class="prompt-text" text="${this.txt}"></p-wc>
               </div>
 
               <form>
                 <div class="prompt-input-box">
-                  <input type="text" class="prompt-input" />
+                  <input type="text" class="prompt-input" value="${this.input}" />
                 </div>
 
                 <div class="prompt-button-box">

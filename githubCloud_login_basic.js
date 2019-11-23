@@ -42,7 +42,7 @@ customElements.define(
       let login_button = this.shadowDOM.querySelector(".basic-login-button");
       
       login_button.onclick = async () => {
-        if (await confirm("hello")) {
+        if (await prompt("hello","test")) {
           console.log("confirm true");
         } else {
           console.log("confirm false");

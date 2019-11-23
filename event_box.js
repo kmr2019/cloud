@@ -8,12 +8,6 @@ alert = txt => {
   document.body.appendChild(dv.firstChild);
 };
 
-prompt = txt => {
-  let dv = document.createElement("div");
-  dv.innerHTML += `<prompt-custom data="${txt}"></prompt-custom>`;
-  document.body.appendChild(dv.firstChild);
-};
-
 function confirm(txt) {
   let dv = document.createElement("div");
   dv.innerHTML += `<confirm-custom data="${txt}"></confirm-custom>`;
@@ -41,5 +35,39 @@ function confirm(txt) {
       attributes: true
     });
   });
-  
 }
+
+
+prompt = (txt,input) => {
+  let dv = document.createElement("div");
+  dv.innerHTML += `<prompt-custom data="${txt}" input="${input}"></prompt-custom>`;
+  document.body.appendChild(dv.firstChild);
+
+  return new Promise(resolve => {
+    let prompt_custom = document.querySelector("prompt-custom");
+
+    var observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type == "attributes") {
+          this.value = prompt_custom.getAttribute("btn");
+          this.input = prompt_custom.getAttribute("input");
+
+          if (this.value == 1) {
+            console.log(this.input);
+            resolve(true);
+           
+          } else {
+            console.log(this.input);
+            resolve(false); 
+            
+          }
+        }
+      });
+    });
+    
+    observer.observe(prompt_custom, {
+      attributes: true
+    });
+  });
+};
+

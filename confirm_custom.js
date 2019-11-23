@@ -22,9 +22,11 @@ customElements.define(
         list.onclick = () => {
           if (list.getAttribute("value") == "확인") {
             this.setAttribute("btn", 1);
+            render(this.template(), this.shadowDOM);
             document.body.removeChild(this);
           } else {
             this.setAttribute("btn", 0);
+            render(this.template(), this.shadowDOM);
             document.body.removeChild(this);
           }
           
@@ -42,8 +44,6 @@ customElements.define(
           this.data = new_value;
           render(this.template(), this.shadowDOM);
           break;
-
-        case "value":
       }
       console.log(name, old_value, new_value);
       console.log(`Attribute: ${name} changed to ${new_value}`);
