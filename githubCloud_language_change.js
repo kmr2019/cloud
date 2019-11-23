@@ -25,7 +25,10 @@ const msg = {
     tokenb: "토큰",
     icons: "모아보기",
     fullIist: "전체목록",
-    picture:"사진",
+    picture: "사진",
+    video: "동영상",
+    music: "음악",
+    document: "문서",
   },
   "ko-kr": {
     hello: "안녕하세요",
@@ -54,6 +57,9 @@ const msg = {
     icons: "모아보기",
     fullIist: "전체목록",
     picture:"사진",
+    video: "동영상",
+    music: "음악",
+    document: "문서",
   },
   en: {
     hello: "hello",
@@ -82,6 +88,9 @@ const msg = {
     icons: "icons",
     fullIist: "full list",
     picture:"picture",
+    video: "video",
+    music: "music",
+    document: "document",
   }
 };
 

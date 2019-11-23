@@ -28,14 +28,11 @@ customElements.define(
             icon[0].style.background = "#FF5A5A";
             icon[1].style.background = "gray";
             this.setAttribute("index", 0);
-            //this.test = 0;
           } else {
             icon[0].style.background = "gray";
             icon[1].style.background = "#FF5A5A";
             this.setAttribute("index", 1);
-            //this.test = 1;
           }
-          //this.setAttribute("test",this.test);
         };
       });
       console.log("connected!");
@@ -160,7 +157,7 @@ customElements.define(
           <div class="navi-contents">
             <div class="navi-list-box">
               <button class="navi-icon" data-value="icons"></button>
-              <button class="navi-icon" data-value="details"></button>
+              <button class="navi-icon" data-value="fullList"></button>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
-const array = [
+const file_list = [
   "박준렬 연애 목록.xls",
-  "최진우 사진.jpg",
+  "choi.jpg",
   "사업 성공.pdf",
   "image.css",
   "index.html",
   "최종 ppt.ppt",
-  "박준렬 엽사.jpg",
+  "park.jpg",
   "test.html",
   "최종 논문.pdf",
   "test.css",
@@ -14,12 +14,10 @@ const array = [
 
 const extension = {
   xls: "images/xls.png",
-  jpg: "images/jpg.png",
   javascript: "images/javascript.png",
   css: "images/css.png",
   pdf: "images/pdf.png",
   html: "images/html.png",
-  png: "images/png,png",
   ppt: "images/ppt.png"
 };
 
@@ -63,17 +61,39 @@ customElements.define(
       let hour = date.getHours();
       let minute = date.getMinutes();
 
-      //let reverse_list = array.reverse();
+      if (new_value != old_value) {
+        // scroll y 관련 예외처리
+        this.count = 0;
+        full_list.style.overflowY = "visible";
+        icons.style.overflowY = "visible";
+      }
 
       if (navi_index == 1) {
         icons.innerHTML = ` `;
         full_list.style.display = "grid";
         icons.style.display = "none";
 
-        array.reverse().forEach(data => {
+        file_list.reverse().forEach(data => {
+          this.count++;
           this.farthing = data.split(".");
           this.extension = extension[this.farthing[1]];
-          full_list.innerHTML += `<div class='directory-grid-item'>
+
+          if (
+            this.farthing[1] == "png" ||
+            this.farthing[1] == "jpg" ||
+            this.farthing[1] == "jpeg" ||
+            this.farthing[1] == "svg" ||
+            this.farthing[1] == "gif"
+          ) {
+            this.extension = `images/${data}`;
+          }
+
+          if (this.count > 15) {
+            full_list.style.overflowY = "scroll";
+            icons.style.overflowY = "scroll";
+          }
+
+          full_list.innerHTML += `<div class='directory-full-list-item'>
                                  <img src='${
                                    this.extension
                                  }' class='directory-img'>
@@ -89,16 +109,31 @@ customElements.define(
         full_list.style.display = "none";
         icons.style.display = "grid";
 
-        icons.innerHTML += ` <div class='directory-grid-item'>
+        icons.innerHTML = ` <div class='directory-icons-item'>
                              <img src='images/picture.png' class='directory-img'>
                              <p-wc class='directory-icons-name' text='picture'></p-wc>  
+                           </div>
+                           <div class='directory-icons-item'>
+                             <img src='images/video.png' class='directory-img'>
+                             <p-wc class='directory-icons-name' text='video'></p-wc>  
+                           </div>
+                           <div class='directory-icons-item'>
+                             <img src='images/music.png' class='directory-img'>
+                             <p-wc class='directory-icons-name' text='music'></p-wc>  
+                           </div>
+                           <div class='directory-icons-item'>
+                             <img src='images/document.png' class='directory-img'>
+                             <p-wc class='directory-icons-name' text='document'></p-wc>  
                            </div>
         `;
       }
 
-      let grid_box = this.shadowDOM.querySelectorAll(".directory-grid-item");
+      let full_list_item = this.shadowDOM.querySelectorAll(
+        ".directory-full-list-item"
+      );
+      let icons_item = this.shadowDOM.querySelectorAll(".directory-icons-item");
 
-      grid_box.forEach(list => {
+      full_list_item.forEach(list => {
         list.onmouseover = () => {
           list.children[0].style.animation = "expansion 1s forwards";
         };
@@ -107,6 +142,21 @@ customElements.define(
           list.children[0].style.animation = "reduction 1s forwards";
         };
       });
+
+      icons_item.forEach(list => {
+        list.onmouseover = () => {
+          list.children[0].style.animation = "expansion 1s forwards";
+        };
+
+        list.onmouseout = () => {
+          list.children[0].style.animation = "reduction 1s forwards";
+        };
+
+        list.onclick = ()=>{
+          console.log("eggew");
+        };
+      });
+
       render(this.template(), this.shadowDOM);
     }
 
@@ -124,6 +174,7 @@ customElements.define(
           :host {
             margin: 0;
             padding: 0;
+            --row-value: 1;
           }
 
           .directory-container {
@@ -133,7 +184,7 @@ customElements.define(
           }
 
           .directory-contents {
-            display: relative;
+            display: flex;
             width: 100%;
             height: 500px;
             max-width: 1080px;
@@ -148,26 +199,46 @@ customElements.define(
             max-width: 1080px;
             margin: 0 auto;
             box-sizing: border-box;
-            background: gray;
+            border-radius: 20px;
             opacity: 0.2;
           }
 
-          .directory-full-list {
+          .directory-full-list,
+          .directory-icons {
             display: grid;
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(3, 1fr);
             grid-gap: 10px;
-            overflow-y: scroll;
             width: 100%;
             height: 480px;
             padding: 20px 20px 0;
             box-sizing: border-box;
           }
 
-          .directory-grid-item {
+          .directory-icons {
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr;
+            height: auto;
+            margin: auto 0;
+          }
+
+          .directory-full-list-item,
+          .directory-icons-item {
             width: auto;
             height: auto;
             padding: 20px;
             border: 1px solid gray;
+            box-sizing: border-box;
+          }
+
+          .directory-icons-item {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            padding: 50px;
+            border: 1px solid #ff5a5a;
+            border-radius: 50%;
+            background: #ff5a5a;
           }
 
           .directory-img {
@@ -175,17 +246,6 @@ customElements.define(
             width: 45px;
             height: 45px;
             margin: 0 auto;
-          }
-
-          .directory-icons {
-            display: grid;
-            grid-template-columns: auto;
-            grid-gap: 10px;
-            overflow-y: scroll;
-            width: 100%;
-            height: 480px;
-            padding: 20px 20px 0;
-            box-sizing: border-box;
           }
 
           @keyframes expansion {
@@ -217,6 +277,12 @@ customElements.define(
             font-size: 0.8em;
             text-align: center;
             color: gray;
+          }
+
+          .directory-icons-name {
+            font-size: 1.1em;
+            line-height: 50px;
+            color: white;
           }
 
           @media (max-width: 991px) {
