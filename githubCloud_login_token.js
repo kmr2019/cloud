@@ -14,30 +14,50 @@ customElements.define(
     }
 
     connectedCallback() {
-      let count = 0;
-      let remember_button = this.shadowDOM.querySelector(
-        ".token-remember-id-button"
-      );
-      let remember_button_move = this.shadowDOM.querySelector(
-        ".token-remember-id-button-move"
-      );
       let remember_text = this.shadowDOM.querySelector(
         ".token-remember-id-text"
       );
 
-      remember_button.onclick = () => {
-        if (count == 0) {
-          count++;
-          remember_button_move.style.animation =
-            "remember-button-ani-right .5s forwards";
-          remember_text.style.color = "white";
-        } else {
-          count--;
-          remember_button_move.style.animation =
-            "remember-button-ani-left .5s forwards";
-          remember_text.style.color = "gray";
-        }
-      };
+      let navi_index = this.shadowDOM.querySelector("login-remember-button");
+
+      var observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type == "attributes") {
+            this.data = navi_index.getAttribute("index");
+
+            if (this.data == 0) {
+              remember_text.style.color = "white";
+            } else {
+              remember_text.style.color = "gray";
+            }
+            render(this.template(), this.shadowDOM);
+          }
+        });
+      });
+
+      observer.observe(navi_index, {
+        attributes: true
+      });
+
+      let submit_click = this.shadowDOM.querySelector("submit-button");
+
+      var observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type == "attributes") {
+            this.click_data = submit_click.getAttribute("click");
+
+            if(this.click_data == 1) {
+              this.shadowDOM.querySelector(".token-contents>form").submit();
+            }
+            
+            render(this.template(), this.shadowDOM);
+          }
+        });
+      });
+
+      observer.observe(submit_click, {
+        attributes: true
+      });
       console.log("token-connected!");
     }
 
@@ -65,30 +85,30 @@ customElements.define(
             padding: 0;
           }
 
-          .token-container {
+          .token-contents {
             width: 100%;
             height: auto;
-            padding: 20px 30px;
             box-sizing: border-box;
           }
 
           .token-Information-box {
             width: 100%;
             height: auto;
-            padding: 0 15px 15px;
+            padding: 0 15px;
             box-sizing: border-box;
           }
 
           .token-login-text-box {
             width: 100%;
-            height: 50px;
+            height: auto;
+            padding: 15px;
+            box-sizing: border-box;
           }
 
           .token-login-text-box > p-wc {
             margin: 0;
             font-weight: bold;
-            font-size: 1em;
-            line-height: 50px;
+            font-size: 1.3em;
             text-align: center;
             color: white;
           }
@@ -97,20 +117,18 @@ customElements.define(
             width: 100%;
             height: auto;
             margin: 0;
-            padding: 15px 0 0;
             box-sizing: border-box;
           }
 
           .input-box {
             width: 100%;
-            height: 50px;
-            margin: 0;
-            padding-left: 20px;
+            height: 45px;
+            padding: 10px 15px;
             border: 1px solid gray;
             border-radius: 30px;
             box-sizing: border-box;
             background: gray;
-            opacity: 0.4;
+            opacity: 0.5;
             font-size: 1em;
             color: white;
           }
@@ -128,42 +146,8 @@ customElements.define(
             justify-content: flex-end;
             width: 100%;
             height: auto;
-            padding: 0 15px;
+            padding: 15px;
             box-sizing: border-box;
-          }
-
-          .token-remember-id-button {
-            position: relative;
-            width: 40px;
-            height: auto;
-            border-radius: 20px;
-            background: gray;
-          }
-
-          .token-remember-id-button-move {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 20px;
-            background: white;
-          }
-
-          @keyframes remember-button-ani-right {
-            0% {
-              left: 0px;
-            }
-            100% {
-              left: 20px;
-            }
-          }
-
-          @keyframes remember-button-ani-left {
-            0% {
-              left: 20px;
-            }
-            100% {
-              left: 0px;
-            }
           }
 
           .token-remember-id-text {
@@ -175,13 +159,16 @@ customElements.define(
             color: gray;
           }
 
+          .token-remember-button {
+            margin: auto 0;
+          }
 
           .token-join-id-password-find {
             display: flex;
             justify-content: space-between;
             width: 100%;
             height: auto;
-            padding: 10px 15px 0;
+            padding: 0 15px;
             box-sizing: border-box;
           }
 
@@ -192,7 +179,7 @@ customElements.define(
           .token-join-id-password-link > p-wc {
             font-weight: bold;
             font-size: 0.7em;
-            line-height: 21px;
+            line-height: 20px;
             color: gray;
           }
 
@@ -203,66 +190,9 @@ customElements.define(
             box-sizing: border-box;
           }
 
-          .token-login-button {
-            width: 100%;
-            height: 50px;
-            margin: 0;
-            border: 1px solid #FF5A5A;
-            border-radius: 30px;
-            background: #FF5A5A;
-            font-weight: bold;
-            font-size: 20px;
-            color: white;
-          }
-
-          @media (max-width: 991px) {
-            .token-container {
-              padding: 15px;
-            }
-
-            .token-login-text-box {
-              height: 45px;
-            }
-
-            .token-login-text-box > p-wc {
-              font-size: 1.6em;
-              line-height: 45px;
-            }
-
-            .input-box {
-              height: 25px;
-              font-size: 0.9em;
-            }
-          }
-
-          @media (max-width: 767px) {
-            .token-container {
-              padding: 10px;
-            }
-
-            .token-login-text-box {
-              height: 40px;
-            }
-
-            .token-login-text-box > p-wc {
-              font-size: 1.4em;
-              line-height: 40px;
-            }
-
-            .input-box {
-              height: 23px;
-              font-size: 0.8em;
-            }
-          }
-
-          @media (max-width: 575px) {
-            .input-box {
-              font-size: 0.7em;
-            }
-          }
         </style>
 
-        <div class="token-container">
+        <div class="token-contents">
           <form>
             <div class="token-Information-box">
               <div class="token-login-text-box">
@@ -284,10 +214,7 @@ customElements.define(
 
             <div class="token-remember-id-box">
               <p-wc class="token-remember-id-text" text="tokenRemember">></p-wc>
-
-              <div class="token-remember-id-button">
-                <div class="token-remember-id-button-move"></div>
-              </div>
+              <login-remember-button class="token-remember-button"></login-remember-button>
             </div>
 
             <div class="token-join-id-password-find">
@@ -309,7 +236,7 @@ customElements.define(
             </div>
 
             <div class="token-login-button-box">
-              <input type="submit" class="token-login-button" value="LOGIN" />
+              <submit-button text="login"></submit-button>
             </div>
           </form>
         </div>

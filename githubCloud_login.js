@@ -14,27 +14,28 @@ customElements.define(
     }
 
     connectedCallback() {
-      let login_button = this.shadowDOM.querySelectorAll(".login-button");
-      let basic = this.shadowDOM.querySelector("login-basic");
-      let token = this.shadowDOM.querySelector("login-token");
-      let basic_text = this.shadowDOM.querySelector(".basic-login-text-box>p-wc");
-      let token_text = this.shadowDOM.querySelector(".token-login-text-box>p-wc");
-      token.style.display = "none";
+      let navi_index = this.shadowDOM.querySelector("login-navi");
 
-      login_button.forEach(list => {
-        list.onclick = () => {
-          if (list.getAttribute("data-value") == "basic") {
-            basic.style.display = "block";
-            token.style.display = "none";
-            basic_text.style.color = "#FF5A5A";
-            token_text.style.color = "gray";
-          } else {
-            basic.style.display = "none";
-            token.style.display = "block";
-            basic_text.style.color = "gray";
-            token_text.style.color = "#FF5A5A";
+      var observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type == "attributes") {
+            this.data = navi_index.getAttribute("index");
+
+            if (this.data == 0) {
+              this.shadowDOM.querySelector("login-basic").style.display = "block";
+              this.shadowDOM.querySelector("login-token").style.display = "none";
+            } else {
+              this.shadowDOM.querySelector("login-basic").style.display = "none";
+              this.shadowDOM.querySelector("login-token").style.display = "block";
+            }
+
+            render(this.template(), this.shadowDOM);
           }
-        };
+        });
+      });
+
+      observer.observe(navi_index, {
+        attributes: true
       });
 
       console.log("connected!");
@@ -49,7 +50,6 @@ customElements.define(
     }
 
     adoptedCallback() {
-      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
       console.log("adopted!");
     }
 
@@ -74,129 +74,32 @@ customElements.define(
           .login-container {
             display: flex;
             width: 100%;
-            height: 800px;
+            height: 600px;
             margin: 0 auto;
-            box-sizing: border-box;
           }
 
-          .login-box {
-            width: 500px;
+          .login-contents {
+            width: 90%;
             height: auto;
             margin: auto;
-            box-sizing: border-box;
           }
 
-          .login-text-box {
-            width: 100%;
-            height: auto;
-            padding: 0 45px;
-            box-sizing: border-box;
-          }
-
-          .basic-login-text-box,
-          .token-login-text-box {
-            display: inline-block;
-            width: auto;
-            height: auto;
-            padding: 0 10px;
-            box-sizing: border-box; 
-          }
-
-          .basic-login-text-box > p-wc,
-          .token-login-text-box > p-wc {
-            margin: 0;
-            font-weight: bold;
-            font-size: 1em;
-            text-align: center;
-            color: #FF5A5A;
-          }
-
-          .token-login-text-box > p-wc {
-            color: gray;
-          }
-
-          @media (max-width: 991px) {
-            .login-container {
-              height: 700px;
-            }
-
-            .login-box {
-              width: 400px;
-            }
-
-            .basic-login-box,
-            .token-login-box {
-              height: 60px;
-            }
-
-            .basic-login-box > p-wc,
-            .token-login-box > p-wc {
-              font-size: 1.3em;
-              line-height: 60px;
+          @media (min-width: 576px) {
+            .login-contents {
+              width: 500px;
             }
           }
 
-          @media (max-width: 767px) {
-            .login-container {
-              height: 600px;
-            }
-
-            .login-box {
-              width: 350px;
-            }
-
-            .basic-login-box,
-            .token-login-box {
-              height: 50px;
-            }
-
-            .basic-login-box > p-wc,
-            .token-login-box > p-wc {
-              font-size: 1.1em;
-              line-height: 50px;
-            }
+          @media (min-width: 768px) {
           }
 
-          @media (max-width: 575px) {
-            .login-container {
-              height: 550px;
-            }
-
-            .login-box {
-              width: 330px;
-            }
-
-            .basic-login-box,
-            .token-login-box {
-              height: 45px;
-            }
-
-            .basic-login-box > p-wc,
-            .token-login-box > p-wc {
-              font-size: 1em;
-              line-height: 45spx;
-            }
+          @media (min-width: 992px) {
           }
         </style>
 
         <div class="login-container">
-          <div class="login-box">
-            <div class="login-text-box">
-              <div class="basic-login-text-box">
-                <p-wc
-                  class="login-button"
-                  data-value="basic"
-                  text="basic"
-                ></p-wc>
-              </div>
-              <div class="token-login-text-box">
-                <p-wc
-                  class="login-button"
-                  data-value="token"
-                  text="tokenb"
-                ></p-wc>
-              </div>
-            </div>
+          <div class="login-contents">
+            <login-navi></login-navi>
             <login-basic></login-basic>
             <login-token></login-token>
           </div>

@@ -14,40 +14,60 @@ customElements.define(
     }
 
     connectedCallback() {
-      let count = 0;
-      let remember_button = this.shadowDOM.querySelector(
-        ".basic-remember-id-button"
-      );
-      let remember_button_move = this.shadowDOM.querySelector(
-        ".basic-remember-id-button-move"
-      );
       let remember_text = this.shadowDOM.querySelector(
         ".basic-remember-id-text"
       );
 
-      remember_button.onclick = () => {
-        if (count == 0) {
-          count++;
-          remember_button_move.style.animation =
-            "remember-button-ani-right .5s forwards";
-          remember_text.style.color = "white";
-        } else {
-          count--;
-          remember_button_move.style.animation =
-            "remember-button-ani-left .5s forwards";
-          remember_text.style.color = "gray";
-        }
-      };
+      let navi_index = this.shadowDOM.querySelector("login-remember-button");
 
-      let login_button = this.shadowDOM.querySelector(".basic-login-button");
-      
+      var observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type == "attributes") {
+            this.data = navi_index.getAttribute("index");
+
+            if (this.data == 0) {
+              remember_text.style.color = "white";
+            } else {
+              remember_text.style.color = "gray";
+            }
+            render(this.template(), this.shadowDOM);
+          }
+        });
+      });
+
+      observer.observe(navi_index, {
+        attributes: true
+      });
+
+      let login_button = this.shadowDOM.querySelector("submit-button");
+
       login_button.onclick = async () => {
-        if (await prompt("hello","test")) {
+        if (await prompt("hello", "test")) {
           console.log("confirm true");
         } else {
           console.log("confirm false");
         }
       };
+
+      let submit_click = this.shadowDOM.querySelector("submit-button");
+
+      var observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type == "attributes") {
+            this.click_data = submit_click.getAttribute("click");
+
+            if (this.click_data == 1) {
+              this.shadowDOM.querySelector(".basic-contents>form").submit();
+            }
+
+            render(this.template(), this.shadowDOM);
+          }
+        });
+      });
+
+      observer.observe(submit_click, {
+        attributes: true
+      });
       console.log("basic-connected!");
     }
 
@@ -67,17 +87,19 @@ customElements.define(
       return html`
         <link href="normalize.css" />
         <link href="skeleton.css" />
-
+        <link
+          href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap"
+          rel="stylesheet"
+        />
         <style>
           :host {
             margin: 0;
             padding: 0;
           }
 
-          .basic-container {
+          .basic-contents {
             width: 100%;
             height: auto;
-            padding: 20px 30px;
             box-sizing: border-box;
           }
 
@@ -90,14 +112,15 @@ customElements.define(
 
           .basic-login-text-box {
             width: 100%;
-            height: 50px;
+            height: auto;
+            padding: 15px;
+            box-sizing: border-box;
           }
 
           .basic-login-text-box > p-wc {
             margin: 0;
             font-weight: bold;
-            font-size: 1em;
-            line-height: 50px;
+            font-size: 1.3em;
             text-align: center;
             color: white;
           }
@@ -106,22 +129,24 @@ customElements.define(
             width: 100%;
             height: auto;
             margin: 0;
-            padding: 15px 0 0;
             box-sizing: border-box;
           }
 
           .input-box {
             width: 100%;
-            height: 50px;
-            margin-bottom: 10px;
-            padding-left: 20px;
+            height: 45px;
+            padding: 10px 15px;
             border: 1px solid gray;
             border-radius: 30px;
             box-sizing: border-box;
             background: gray;
-            opacity: 0.4;
+            opacity: 0.5;
             font-size: 1em;
             color: white;
+          }
+
+          .input-box:nth-child(1) {
+            margin-bottom: 15px;
           }
 
           .input-box:focus {
@@ -137,42 +162,8 @@ customElements.define(
             justify-content: flex-end;
             width: 100%;
             height: auto;
-            padding: 0 15px;
+            padding: 15px;
             box-sizing: border-box;
-          }
-
-          .basic-remember-id-button {
-            position: relative;
-            width: 40px;
-            height: auto;
-            border-radius: 20px;
-            background: gray;
-          }
-
-          .basic-remember-id-button-move {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 20px;
-            background: white;
-          }
-
-          @keyframes remember-button-ani-right {
-            0% {
-              left: 0px;
-            }
-            100% {
-              left: 20px;
-            }
-          }
-
-          @keyframes remember-button-ani-left {
-            0% {
-              left: 20px;
-            }
-            100% {
-              left: 0px;
-            }
           }
 
           .basic-remember-id-text {
@@ -184,12 +175,16 @@ customElements.define(
             color: gray;
           }
 
+          .basic-remember-button {
+            margin: auto 0;
+          }
+
           .basic-join-id-password-find {
             display: flex;
             justify-content: space-between;
             width: 100%;
             height: auto;
-            padding: 10px 15px 0;
+            padding: 0 15px;
             box-sizing: border-box;
           }
           .basic-join-id-password-find > a {
@@ -199,7 +194,7 @@ customElements.define(
           .basic-join-id-password-link > p-wc {
             font-weight: bold;
             font-size: 0.7em;
-            line-height: 21px;
+            line-height: 20px;
             color: gray;
           }
 
@@ -209,67 +204,9 @@ customElements.define(
             padding: 15px;
             box-sizing: border-box;
           }
-
-          .basic-login-button {
-            width: 100%;
-            height: 50px;
-            margin: 0;
-            border: 1px solid #FF5A5A;
-            border-radius: 30px;
-            background: #FF5A5A;
-            font-weight: bold;
-            font-size: 20px;
-            color: white;
-          }
-
-          @media (max-width: 991px) {
-            .basic-container {
-              padding: 15px;
-            }
-
-            .basic-login-text-box {
-              height: 45px;
-            }
-
-            .basic-login-text-box > p-wc {
-              font-size: 1.6em;
-              line-height: 45px;
-            }
-
-            .input-box {
-              height: 25px;
-              font-size: 0.9em;
-            }
-          }
-
-          @media (max-width: 767px) {
-            .basic-container {
-              padding: 10px;
-            }
-
-            .basic-login-text-box {
-              height: 40px;
-            }
-
-            .basic-login-text-box > p-wc {
-              font-size: 1.4em;
-              line-height: 40px;
-            }
-
-            .input-box {
-              height: 23px;
-              font-size: 0.8em;
-            }
-          }
-
-          @media (max-width: 575px) {
-            .input-box {
-              font-size: 0.7em;
-            }
-          }
         </style>
 
-        <div class="basic-container">
+        <div class="basic-contents">
           <form>
             <div class="basic-Information-box">
               <div class="basic-login-text-box">
@@ -300,10 +237,9 @@ customElements.define(
 
             <div class="basic-remember-id-box">
               <p-wc class="basic-remember-id-text" text="idRemember">></p-wc>
-
-              <div class="basic-remember-id-button">
-                <div class="basic-remember-id-button-move"></div>
-              </div>
+              <login-remember-button
+                class="basic-remember-button"
+              ></login-remember-button>
             </div>
 
             <div class="basic-join-id-password-find">
@@ -325,7 +261,7 @@ customElements.define(
             </div>
 
             <div class="basic-login-button-box">
-              <input type="submit" class="basic-login-button" value="LOGIN" />
+              <submit-button></submit-button>
             </div>
           </form>
         </div>

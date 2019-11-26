@@ -1,10 +1,10 @@
 customElements.define(
   "main-directory",
   class extends HTMLElement {
-    static get observedAttributes() {}
+    static get observedAttributes() {
+    }
 
     constructor() {
-      // 생성자
       super();
       this.shadowDOM = this.attachShadow({
         mode: "open"
@@ -26,7 +26,7 @@ customElements.define(
       });
 
       observer.observe(navi_index, {
-        attributes: true //configure it to listen to attribute changes
+        attributes: true
       });
 
       console.log("connected!");
@@ -42,7 +42,6 @@ customElements.define(
     }
 
     adoptedCallback() {
-      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
       console.log("adopted!");
     }
 
@@ -56,9 +55,36 @@ customElements.define(
             margin: 0;
             padding: 0;
           }
+
+          .directory-container {
+            width: 100%;
+            height: 600px;
+            margin: 0 auto;
+          }
+          
+          .directory-contents {
+            width: 90%;
+            height: auto;
+            margin: 0 auto;
+            box-sizing: border-box;
+          }
+
+          @media (min-width: 576px) {
+          }
+
+          @media (min-width: 768px) {
+          }
+
+          @media (min-width: 992px) {
+          }
         </style>
-        <main-directory-navi></main-directory-navi>
-        <main-directory-contents list=${this.data}></main-directory-contents>
+
+        <div class="directory-container">
+          <div class="directory-contents">
+            <main-directory-navi></main-directory-navi>
+            <main-directory-contents list=${this.data}></main-directory-contents>
+          </div>
+        </div>
       `;
     }
   }

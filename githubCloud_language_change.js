@@ -29,6 +29,7 @@ const msg = {
     video: "동영상",
     music: "음악",
     document: "문서",
+    login: "로그인"
   },
   "ko-kr": {
     hello: "안녕하세요",
@@ -56,10 +57,11 @@ const msg = {
     tokenb: "토큰",
     icons: "모아보기",
     fullIist: "전체목록",
-    picture:"사진",
+    picture: "사진",
     video: "동영상",
     music: "음악",
     document: "문서",
+    login: "로그인"
   },
   en: {
     hello: "hello",
@@ -87,10 +89,11 @@ const msg = {
     tokenb: "TOKEN",
     icons: "icons",
     fullIist: "full list",
-    picture:"picture",
+    picture: "picture",
     video: "video",
     music: "music",
     document: "document",
+    login: "LOGIN"
   }
 };
 
@@ -170,7 +173,10 @@ customElements.define(
       return html`
         <link href="normalize.css" />
         <link href="skeleton.css" />
-
+        <link
+          href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap"
+          rel="stylesheet"
+        />
         <style>
           :host {
             padding: 0;

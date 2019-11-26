@@ -6,7 +6,6 @@ customElements.define(
     }
 
     constructor() {
-      // 생성자
       super();
       this.shadowDOM = this.attachShadow({
         mode: "open"

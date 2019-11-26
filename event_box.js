@@ -12,7 +12,7 @@ function confirm(txt) {
   let dv = document.createElement("div");
   dv.innerHTML += `<confirm-custom data="${txt}"></confirm-custom>`;
   document.body.appendChild(dv.firstChild);
-  
+
   return new Promise(resolve => {
     let confirm_custom = document.querySelector("confirm-custom");
 
@@ -23,22 +23,20 @@ function confirm(txt) {
 
           if (this.value == 1) {
             resolve(true);
-           
           } else {
-            resolve(false); 
+            resolve(false);
           }
         }
       });
     });
-    
+
     observer.observe(confirm_custom, {
       attributes: true
     });
   });
 }
 
-
-prompt = (txt,input) => {
+prompt = (txt, input) => {
   let dv = document.createElement("div");
   dv.innerHTML += `<prompt-custom data="${txt}" input="${input}"></prompt-custom>`;
   document.body.appendChild(dv.firstChild);
@@ -55,19 +53,16 @@ prompt = (txt,input) => {
           if (this.value == 1) {
             console.log(this.input);
             resolve(true);
-           
           } else {
             console.log(this.input);
-            resolve(false); 
-            
+            resolve(false);
           }
         }
       });
     });
-    
+
     observer.observe(prompt_custom, {
       attributes: true
     });
   });
 };
-

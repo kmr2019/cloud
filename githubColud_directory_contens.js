@@ -50,9 +50,10 @@ customElements.define(
 
     attributeChangedCallback(name, old_value, new_value) {
       console.log(`Attribute: ${name} changed to ${new_value}`);
+
       let navi_index = new_value;
-      let full_list = this.shadowDOM.querySelector(".directory-full-list");
       let icons = this.shadowDOM.querySelector(".directory-icons");
+      let full_list = this.shadowDOM.querySelector(".directory-full-list");
 
       let date = new Date();
       let year = date.getUTCFullYear();
@@ -152,7 +153,7 @@ customElements.define(
           list.children[0].style.animation = "reduction 1s forwards";
         };
 
-        list.onclick = ()=>{
+        list.onclick = () => {
           console.log("eggew");
         };
       });
@@ -161,7 +162,6 @@ customElements.define(
     }
 
     adoptedCallback() {
-      // 커스텀 엘리먼트가 새로운 다큐먼트로 이동되었을 때 호출
       console.log("adopted!");
     }
 
@@ -177,34 +177,17 @@ customElements.define(
             --row-value: 1;
           }
 
-          .directory-container {
-            width: 100%;
-            height: 500px;
-            margin: 20px 0 40px;
-          }
-
-          .directory-contents {
+          .directory-contents-box {
             display: flex;
             width: 100%;
-            height: 500px;
-            max-width: 1080px;
-            margin: 0 auto;
-          }
-
-          .directory-contents-clone {
-            position: absolute;
-            z-index: -10;
-            width: 100%;
-            height: 500px;
-            max-width: 1080px;
-            margin: 0 auto;
+            height: auto;
+            padding: 15px;
             box-sizing: border-box;
-            border-radius: 20px;
-            opacity: 0.2;
+            background: white;
           }
 
-          .directory-full-list,
-          .directory-icons {
+          .directory-icons,
+          .directory-full-list {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(3, 1fr);
@@ -295,13 +278,12 @@ customElements.define(
           }
         </style>
 
-        <div class="directory-container">
-          <div class="directory-contents">
-            <div class="directory-contents-clone"></div>
+        
+          <div class="directory-contents-box">
             <div class="directory-icons"></div>
             <div class="directory-full-list"></div>
           </div>
-        </div>
+        
       `;
     }
   }
