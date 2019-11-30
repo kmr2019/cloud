@@ -57,6 +57,7 @@ customElements.define(
           }
 
           .directory-container {
+            display: flex;
             width: 100%;
             height: 600px;
             margin: 0 auto;
@@ -65,7 +66,7 @@ customElements.define(
           .directory-contents {
             width: 90%;
             height: auto;
-            margin: 0 auto;
+            margin: auto;
             box-sizing: border-box;
           }
 

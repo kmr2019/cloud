@@ -64,7 +64,7 @@ customElements.define(
             display: flex;
             width: 100%;
             height: auto;
-            padding: 15px;
+            padding: 20px 20px 0;
             box-sizing: border-box;
           }
 
