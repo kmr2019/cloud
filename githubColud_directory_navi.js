@@ -60,7 +60,7 @@ customElements.define(
             padding: 0;
           }
 
-          .navi-list-box {
+          .navi-list-container {
             display: flex;
             width: 100%;
             height: auto;
@@ -75,7 +75,7 @@ customElements.define(
             background: gray;
           }
         </style>
-            <div class="navi-list-box">
+            <div class="navi-list-container">
               <button class="navi-icon" data-value="icons"></button>
               <button class="navi-icon" data-value="fullList"></button>
             </div>

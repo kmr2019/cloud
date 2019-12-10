@@ -29,7 +29,10 @@ const msg = {
     video: "동영상",
     music: "음악",
     document: "문서",
-    login: "로그인"
+    login: "로그인",
+    add: "추가",
+    recentfile: "최근 파일",
+    all: "전체",
   },
   "ko-kr": {
     hello: "안녕하세요",
@@ -61,7 +64,11 @@ const msg = {
     video: "동영상",
     music: "음악",
     document: "문서",
-    login: "로그인"
+    login: "로그인",
+    add: "추가",
+    all: "recent file"
+    ,
+    recentfile: "최근 파일"
   },
   en: {
     hello: "hello",
@@ -93,7 +100,10 @@ const msg = {
     video: "video",
     music: "music",
     document: "document",
-    login: "LOGIN"
+    login: "LOGIN",
+    add: "add"
+    ,
+    recentfile: "recent file",all: "ALL",
   }
 };
 
@@ -183,7 +193,7 @@ customElements.define(
             margin: 0;
           }
           p {
-            padding: 0;
+            padding: 5px;
             margin: 0;
           }
         </style>
