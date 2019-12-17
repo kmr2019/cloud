@@ -1,8 +1,21 @@
+function getFormatDate(date) {
+  var year = date.getFullYear();
+  var month = 1 + date.getMonth();
+  month = month >= 10 ? month : `0${month}`;
+  var day = date.getDate();
+  day = day >= 10 ? day : `0${day}`;
+  var hour = date.getHours();
+  hour = hour >= 10 ? hour : `0${hour}`;
+  var minute = date.getMinutes();
+  minute = minute >= 10 ? minute : `0${minute}`;
+  return `${year}-${month}-${day}-${hour}-${minute}`;
+}
+
 customElements.define(
   "directory-file-view",
   class extends HTMLElement {
     static get observedAttributes() {
-      return ["list", "type"];
+      return ["type"];
     }
 
     constructor() {
@@ -16,7 +29,15 @@ customElements.define(
     }
 
     connectedCallback() {
-      console.log("connected!");
+      this.date = new Date();
+      this.date_string = getFormatDate(this.date);
+
+      file_list.forEach(list => {
+        list.time = this.date_string;
+        list.url = list.name;
+        list.upload = false;
+        list.extension = list.name.split(".")[1];
+      });
     }
 
     disconnectedCallback() {
@@ -25,72 +46,128 @@ customElements.define(
 
     attributeChangedCallback(name, old_value, new_value) {
       let file_list_box = this.shadowDOM.querySelector(".file-item-box");
+      let file_length = file_list.length;
+      this.type = new_value;
 
-      if (name == "type") {
-        this.type = new_value;
-
-        if (new_value != old_value) {
-          file_list_box.innerHTML = ``;
-        }
-      } else if (name == "list") {
-        let file_list = JSON.parse(new_value);
-      } else {
+      if (new_value != old_value || new_value == old_value) {
+        file_list_box.innerHTML = ``;
       }
 
-      this.date = new Date();
-      this.year = this.date.getUTCFullYear();
-      this.month = this.date.getMonth();
-      this.day = this.date.getDay();
-      this.hour = this.date.getHours();
-      this.minute = this.date.getMinutes();
+      var drop = this.shadowDOM.querySelector(".file-container");
+
+      drop.ondragover = e => {
+        e.preventDefault();
+      };
+
+      drop.ondrop = e => {
+        e.preventDefault();
+        var data = e.dataTransfer;
+        this.date = new Date();
+
+        if (data.items) {
+          for (var i = 0; i < data.items.length; i++) {
+            if (data.items[i].kind == "file") {
+              this.push_file = data.items[i].getAsFile();
+
+              this.reader = new FileReader();
+              this.reader.readAsDataURL(this.push_file); // 해당 파일 읽어옴
+
+              this.reader.onload = () => {
+                file_list.push({
+                  name: this.push_file.name,
+                  time: getFormatDate(this.date),
+                  url: this.reader.result,
+                  upload: true,
+                  extension: this.push_file.name.split(".")[1]
+                });
+
+                file_list.forEach(list => {
+                  console.log(list.name);
+                });
+
+                if (file_length != file_list.length) {
+                  this.setAttribute("type", this.type);
+                }
+              };
+            }
+          }
+        } else {
+          // File API 사용
+          for (var i = 0; i < data.files.length; i++) {
+            console.log(data.files[i].name);
+          }
+        }
+      };
 
       file_list.some(list => {
-        this.farthing = list.split(".");
-        this.extension = extension[this.farthing[1]];
-
-        if (this.type == "picture") {
-          if (
-            !(
-              this.farthing[1] == "png" ||
-              this.farthing[1] == "jpg" ||
-              this.farthing[1] == "jpeg" ||
-              this.farthing[1] == "svg" ||
-              this.farthing[1] == "gif"
-            )
-          ) {
-            return false;
-          }
-        } else if (this.type == "document") {
-          if (
-            !(
-              this.farthing[1] == "pdf" ||
-              this.farthing[1] == "xls" ||
-              this.farthing[1] == "ppt" ||
-              this.farthing[1] == "html" ||
-              this.farthing[1] == "css"
-            )
-          ) {
-            return false;
-          }
-        }
-
         if (
-          this.farthing[1] == "png" ||
-          this.farthing[1] == "jpg" ||
-          this.farthing[1] == "jpeg" ||
-          this.farthing[1] == "svg" ||
-          this.farthing[1] == "gif"
+          list.upload &&
+          (list.extension == "png" ||
+            list.extension == "jpg" ||
+            list.extension == "jpeg" ||
+            list.extension == "svg" ||
+            list.extension == "gif")
         ) {
-          this.extension = `images/${this.farthing[0]}.${this.farthing[1]}`;
+          this.url = list.url;
+        } else if (
+          list.upload &&
+          !(
+            list.extension == "png" ||
+            list.extension == "jpg" ||
+            list.extension == "jpeg" ||
+            list.extension == "svg" ||
+            list.extension == "gif"
+          )
+        ) {
+          this.url = extension[list.extension];
+        } else {
+          this.farthing = list.url.split(".");
+          this.url = extension[this.farthing[1]];
         }
 
-        file_list_box.innerHTML += `<div class='file-item'>
-      <img src='${this.extension}' class='file-img'>
-      <p class='file-route'>${this.farthing[0]}</p>
-      <p class='file-date'>${this.year}-${this.month + 1}-${this.day + 1} ${
-          this.hour
-        }:${this.minute}</p>
+        if (this.type == "document") {
+          if (
+            !(
+              list.extension == "pdf" ||
+              list.extension == "xls" ||
+              list.extension == "ppt" ||
+              list.extension == "pptx" ||
+              list.extension == "html" ||
+              list.extension == "css"
+            )
+          ) {
+            return false;
+          }
+        } else if (this.type == "video") {
+          if (!(list.extension == "avi")) {
+            return false;
+          }
+        } else if (this.type == "picture") {
+          if (
+            !(
+              list.extension == "png" ||
+              list.extension == "jpg" ||
+              list.extension == "jpeg" ||
+              list.extension == "svg" ||
+              list.extension == "gif"
+            )
+          ) {
+            return false;
+          } else {
+            if (!list.upload) {
+              this.url = `images/${list.name}`;
+            } 
+          }
+        }
+
+        if (this.type != "recentfile" && this.type != "add") {
+          file_list_box.innerHTML += `<div class='file-item'>
+      <img src='${this.url}' class='file-img'>
+      <p class='file-route'>${list.name.split(".")[0]}</p>
+      <p class='file-date'>${list.time}</p>
     </div>`;
+        } else {
+        }
       });
 
       let file_item = this.shadowDOM.querySelectorAll(".file-item");
@@ -124,20 +201,25 @@ customElements.define(
           }
 
           .file-container {
-            overflow-y: auto;
             width: 100%;
-            height: 600px;
-            box-sizing: border-box;
-            margin-top: 190px;
-            border-radius: 30px 30px 0 0;
-            background: white;
+            height: auto;
+          }
+
+          .file-text-box-border {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background: #e7e7e7;
           }
 
           .file-text-box {
             width: 100%;
-            height: auto;
+            height: 50px;
             box-sizing: border-box;
             padding: 10px 20px 0;
+            border-radius: 30px 30px 0 0;
+            background: white;
           }
 
           .file-text-box > p-wc {
@@ -146,13 +228,14 @@ customElements.define(
           }
 
           .file-item-box {
+            background: white;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
             width: 100%;
             height: auto;
             box-sizing: border-box;
-            padding: 5px 15px;
+            padding: 15px;
           }
 
           .file-item {
@@ -217,8 +300,10 @@ customElements.define(
         </style>
 
         <div class="file-container">
-          <div class="file-text-box">
-            <p-wc text="${this.type}"></p-wc>
+          <div class="file-text-box-border">
+            <div class="file-text-box">
+              <p-wc text="${this.type}"></p-wc>
+            </div>
           </div>
           <div class="file-item-box"></div>
         </div>

@@ -65,6 +65,7 @@ customElements.define(
 
         <style>
           :host {
+            display:block;
             --background: #4c4c4c;
             --text-color: white;
           }
@@ -78,9 +79,8 @@ customElements.define(
           .header-container {
             display: flex;
             width: 100%;
-            height: 60px;
-            margin-top: 10px;
-            padding: 10px;
+            height: 80px;
+            box-sizing: border-box;
           }
 
           .header-contents {
